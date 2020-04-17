@@ -1,0 +1,58 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.6.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+group = 'security'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+//	for spring security
+	implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.2.5.RELEASE'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'mysql:mysql-connector-java'
+
+//	for jackson and swagger
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.0.rc1'
+	compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.10.2'
+	compile 'io.springfox:springfox-swagger-ui:2.4.0'
+	compile 'io.springfox:springfox-swagger2:2.4.0'
+
+
+	//sql
+	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+	compile group: 'mysql', name: 'mysql-connector-java'
+
+//	for dto to entity mapping
+	compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.6'
+
+//	for password validation
+	compile group: 'org.passay', name: 'passay', version: '1.0'
+
+// for email support
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail'
+
+// for lombok
+	providedCompile group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'org.springframework.security:spring-security-test'
+}
+
+test {
+	useJUnitPlatform()
+}

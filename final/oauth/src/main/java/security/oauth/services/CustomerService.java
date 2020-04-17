@@ -9,8 +9,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Service;
+import security.oauth.dtos.AddressDto;
 import security.oauth.dtos.CustomerProfileDto;
 import security.oauth.dtos.CustomerRegistrationDto;
+import security.oauth.entities.Address;
 import security.oauth.entities.Customer;
 import security.oauth.entities.User;
 import security.oauth.repos.CustomerRepository;
@@ -23,29 +25,70 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private CustomerProfileDto customerProfileDto;
 
-//
-//    public CustomerProfileDto convtToCustomerDto(Customer customer){
-//        CustomerProfileDto customerProfileDto= ModelMapper.map(customer,CustomerProfileDto.class);
-//        System.out.println("success");
-//        return customerProfileDto;
-//    }
-//
-//    public CustomerProfileDto toCustomerViewProfileDto(Customer customer){
-//
-//    }
+    @Autowired
+    private AddressDto addressDto;
 
+    @Autowired
+    private ModelMapper modelMapper;
+    private Customer customer;
+    private Address address;
 
 
+    public CustomerProfileDto showProfile(){
+        CustomerProfileDto customerProfileDto= modelMapper.map(customer,CustomerProfileDto.class);
+        System.out.println("success");
+        return customerProfileDto;
+    }
+
+    //show address
+    public AddressDto showAddress(String email){
+        //user with email
+        user object
+        AddressDto addressDto=modelMapper.map(address,AddressDto.class);
+        System.out.println("success");
+        return addressDto;
+    }
+
+
+public String viewaddress(String email){
+        Customer customer1=customerRepository.findByEmail(email);
+        return customer1.getAddresses();
+}
+
+public CustomerProfileDto updateAddress(){
+        Customer customer=customerRepository.findByEmail();
+        customer.setAddresses();
+
+}
 
 
 
+    public CustomerProfileDto updateProfile(){
+
+        Customer customer=customerRepository.findById();
+        customerProfileDto.setFirstName(customer.getFirstName());
+        customerProfileDto.setLastName(customer.getLastName());
+        customerProfileDto.setId(customer.getId());
+        customerProfileDto.setContact(customer.getContact());
+
+        return customerProfileDto;
+    }
 
 
+    public CustomerProfileDto updatePassword(String email){
+        Customer customer=customerRepository.findByEmail();
+        customerProfileDto.
+
+    }
+
+    public CustomerProfileDto updateProfile(String email){
 
 
-
-
+        return customerProfileDto;
+    }
 
     public String validateCustomer(CustomerRegistrationDto customerDto) {
         StringBuilder sb = new StringBuilder();
@@ -60,7 +103,8 @@ public class CustomerService {
         return sb.toString();
     }
 
-    public MappingJacksonValue getCustomerDetails(String email){
+
+    public MappingJacksonValue getCustomerDetailsByEmail(String email){
         Customer customer = customerRepository.findByEmail(email);
         CustomerRegistrationDto customerDto = new CustomerRegistrationDto();
         BeanUtils.copyProperties(customer,customerDto);

@@ -12,6 +12,9 @@ public interface CustomerRepository extends CrudRepository<Customer,Long> {
     //native query
     Customer findByEmail(String email);
     Page<Customer> findAll(Pageable pageable);
-    Customer findByUsername(String username);
+
+
+    Customer findByFirstname(String username);
+    //Customer findByUsername(String username);
 
 }

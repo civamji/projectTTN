@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b45b9dcf-4fa1-49ad-9ebc-e99b28d2ff37" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/oauth">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1aeMNxxcr9O8AyURJpIRd5YjTRS" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/oauth" />
+  </component>
+  <component name="RunManager">
+    <configuration name="OauthApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="security.oauth.OauthApplication" />
+      <module name="oauth.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="security.oauth.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.OauthApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b45b9dcf-4fa1-49ad-9ebc-e99b28d2ff37" name="Default Changelist" comment="" />
+      <created>1587091570203</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1587091570203</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="491" y="83" width="374" height="626" key="#com.intellij.ide.util.MemberChooser" timestamp="1587106928116">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state x="491" y="83" width="374" height="626" key="#com.intellij.ide.util.MemberChooser/0.27.1366.741@0.27.1366.741" timestamp="1587106928116" />
+    <state x="476" y="156" width="424" height="484" key="FileChooserDialogImpl" timestamp="1587091923494">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state x="476" y="156" width="424" height="484" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1587091923494" />
+    <state width="1320" height="2" key="GridCell.Tab.0.bottom" timestamp="1587101684998">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state width="1320" height="2" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1587101684998" />
+    <state width="1320" height="2" key="GridCell.Tab.0.center" timestamp="1587101684995">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state width="1320" height="2" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1587101684995" />
+    <state width="1320" height="2" key="GridCell.Tab.0.left" timestamp="1587101684994">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state width="1320" height="2" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1587101684994" />
+    <state width="1320" height="2" key="GridCell.Tab.0.right" timestamp="1587101684997">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state width="1320" height="2" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1587101684997" />
+  </component>
+</project>

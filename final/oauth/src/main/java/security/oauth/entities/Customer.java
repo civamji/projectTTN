@@ -10,7 +10,6 @@ import java.util.Set;
 @Entity
 @PrimaryKeyJoinColumn(name = "user_id")
 @JsonIgnoreProperties(ignoreUnknown = true)
-
 public class Customer extends User {
 
 private String contact;

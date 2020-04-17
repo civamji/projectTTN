@@ -70,6 +70,8 @@ public class UserService {
     @Autowired
     private TokenStore tokenStore;
 
+
+
     public String createVerificationToken(User user){
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken(token, user);
@@ -82,6 +84,7 @@ public class UserService {
     public VerificationToken getVerificationToken(final User user) {
         return verificationTokenRepository.findByUser(user);
     }
+
 
     public VerificationToken getVerificationToken(final String VerificationToken) {
         return verificationTokenRepository.findByToken(VerificationToken);
@@ -113,11 +116,14 @@ public class UserService {
 //        return token.getUser();
 //    }
 //
-//    public VariationOrderid saveRegisteredUser(final User user) {
-//        userRepository.save(user);
-//    }
+    public void saveRegisteredUser(final User user) {
+        userRepository.save(user);
+        System.out.println("save sucess!!");
+    }
 
     // activate any user - customer or seller
+
+
     public ResponseEntity activateUserById(Long id, WebRequest request) {
         Optional<User> user = userRepository.findById(id);
         ResponseEntity responseEntity;

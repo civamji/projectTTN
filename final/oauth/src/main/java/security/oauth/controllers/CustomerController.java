@@ -35,49 +35,56 @@ public class CustomerController {
     @Autowired
     private UserService userService;
 
+//total: 5 URI
+
+    //1.
+    //customer profile by Email
+    @GetMapping("/profile/{Emailid}")
+    public MappingJacksonValue getCustomerProfile(@PathVariable("Emailid") String email){
+        return customerService.getCustomerDetailsByEmail(email);
+    }
 
 
-
+//2.
     //To show customerProfile
     @GetMapping("/customer/profile")
-    public  CustomerProfileDto viewprofile(@RequestBody CustomerProfileDto customerProfileDto, HttpServletRequest request){
-
-        String username=currentUserService.getUser();
-        customerProfileDto=customerService.showProfile();
+    public  CustomerProfileDto viewprofile(@RequestBody  HttpServletRequest request) {
+        String username = currentUserService.getUser();
+        CustomerProfileDto customerProfileDto = customerService.showProfile(username);
         return customerProfileDto;
 
-        Customer customer=customerRepository.findByUsername(username);
+    }
+
+
+    //      Customer customer=customerRepository.findByUsername(username);
 //        return customerService.toCustomerViewProfileDto(customer);
 
-    }
+
 
     //show address
 
     @GetMapping("/address/{Emailid}")
     public void showAddress(@PathVariable String Emailid)
+    {
 
+    }
     //To update customer profile
 
-    @PutMapping("/update/profile/{Emailid}")
-    public void updateProfile(@RequestBody CustomerProfileDto customerProfileDto,@PathVariable String Emailid){
-        userService.updateProfile(customerDto);
-    }
+//    @PutMapping("/update/profile/{Emailid}")
+//    public void updateProfile(@RequestBody CustomerProfileDto customerProfileDto,@PathVariable String Emailid){
+//        userService.updateProfile(customerDto);
+//    }
 
 
 //Update password
 
-    @PutMapping("/updateAddress/profile/{Emailid}")
-    public String updateAddress(@RequestBody CustomerProfileDto customerProfileDto,@PathVariable String Emailid){
-        userService.updatePassword(customerDto);
-    }
+//    @PutMapping("/updateAddress/profile/{Emailid}")
+//    public String updateAddress(@RequestBody CustomerProfileDto customerProfileDto,@PathVariable String Emailid){
+//        userService.updatePassword(customerDto);
+//    }
 
 
 
-    //customer profile by Email
-    @GetMapping("/profile/{Emailid}")
-    public MappingJacksonValue getCustomerProfile(@PathVariable("email") String email){
-        return customerService.getCustomerDetailsByEmail(email);
-    }
 
-
+    
 }

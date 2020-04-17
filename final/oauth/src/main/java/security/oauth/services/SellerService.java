@@ -1,13 +1,25 @@
 package security.oauth.services;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import security.oauth.dtos.SellerProfileDto;
 import security.oauth.dtos.SellerRegistrationDto;
+import security.oauth.entities.Address;
 import security.oauth.entities.Seller;
 import security.oauth.entities.User;
+import security.oauth.events.EmailNotificationService;
+import security.oauth.repos.AddressRepository;
 import security.oauth.repos.SellerRepository;
 import security.oauth.repos.UserRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+
+import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 public class SellerService {
@@ -17,7 +29,52 @@ public class SellerService {
     private SellerRepository sellerRepository;
 
     @Autowired
+    AddressRepository addressRepository;
+
+    @Autowired
+    EmailNotificationService emailNotificationService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+
+
+    @Autowired
     ModelMapper modelMapper;
+
+    //Get seller Details
+
+    public SellerProfileDto getSellerDetials(Long userid){
+        Optional<Seller> seller=sellerRepository.findById(userid);
+        if(seller.isPresent()){
+            SellerProfileDto sellerProfileDto=new SellerProfileDto();
+            BeanUtils.copyProperties(seller.get(),sellerProfileDto);
+            return sellerProfileDto;
+        }
+        else {
+            throw new UsernameNotFoundException("User Not Found");
+        }
+    }
+
+
+    //Update seller
+
+    @Transactional
+    @Modifying
+    public String updateSeller(SellerProfileDto sellerProfileDto, Long userId){
+        Optional<Seller> seller = sellerRepository.findById(userId);
+        if(seller.isPresent()) {
+            seller.get().setFirstName(sellerProfileDto.getFirstName());
+            seller.get().setLastName(sellerProfileDto.getLastName());
+            seller.get().setCompnayContact(sellerProfileDto.getCompanyContact());
+            seller.get().setgst(sellerProfileDto.getGst());
+
+            sellerRepository.save(seller.get());
+            return "Profile update Successfully";
+        }else {
+            throw new UsernameNotFoundException("User not Found");
+        }
+    }
 
     public String validateSeller(SellerRegistrationDto sellerDto) {
         //first method to add fileds
@@ -61,6 +118,6 @@ public class SellerService {
 //        }else {
 //            sb.append("validated");
 //        }
-        return sb.toString();
+
     }
-}
+

@@ -7,17 +7,29 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import security.oauth.dtos.AddressDto;
 import security.oauth.dtos.CustomerProfileDto;
 import security.oauth.dtos.CustomerRegistrationDto;
 import security.oauth.entities.Address;
 import security.oauth.entities.Customer;
 import security.oauth.entities.User;
+import security.oauth.events.EmailNotificationService;
 import security.oauth.repos.AddressRepository;
 import security.oauth.repos.CustomerRepository;
 import security.oauth.repos.UserRepository;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -38,17 +50,49 @@ public class CustomerService {
     @Autowired
     AddressRepository addressRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    EmailNotificationService emailNotificationService;
+
 
 //show current user profile
 
-    public CustomerProfileDto showProfile(String username){
-        Customer customer=new Customer();
-        customerRepository.findByFirstName(username);
-        //customer object with customer Email
-        CustomerProfileDto customerProfileDto= modelMapper.map(customer,CustomerProfileDto.class);
-        System.out.println("success");
-        return customerProfileDto;
+
+    public CustomerProfileDto showCustomerProfile(Long id){
+        Optional<Customer> customer = customerRepository.findById(id);
+        if(customer.isPresent()){
+            CustomerProfileDto customerProfileDto=new CustomerProfileDto();
+            BeanUtils.copyProperties(customer.get(),customerProfileDto);
+            return customerProfileDto;
+        }
+        else {
+        throw new UsernameNotFoundException("User not found");
+        }
     }
+
+    //show address
+
+    public MappingJacksonValue showCustomerAddress(Long id){
+    Optional<Customer> customer=customerRepository.findById(id);
+    if(customer.isPresent())
+    {
+        CustomerProfileDto customerDto=new CustomerProfileDto();
+        BeanUtils.copyProperties(customer.get(),customerDto);
+        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("addresses");
+     //   FilterProvider filterProvider = new SimpleFilterProvider().addFilter("CustomerFilter", filter);
+
+        MappingJacksonValue mappingJacksonValue=new MappingJacksonValue(customerDto);
+
+        return mappingJacksonValue;
+    }
+    else {
+        throw new UsernameNotFoundException("User Not Found");
+    }
+
+    }
+
 
 
     //show address
@@ -63,49 +107,70 @@ public class CustomerService {
 //    }
 
     //Update profile
+    @Transactional
+    @Modifying
+    public String updateCustomer(CustomerProfileDto profileDto,Long id){
+        Optional<Customer> customer=customerRepository.findById(id);
+            BeanUtils.copyProperties(profileDto,customer);
+            if(customer.isPresent())
+            {
+            customer.get().setFirstName(profileDto.getFirstName());
+            customer.get().setLastName(profileDto.getLastName());
+            customer.get().setContact(profileDto.getContact());
+                customer.get().setEmail(profileDto.getEmail());
+                customerRepository.save(customer.get());
+                return "Profile updated successfully";
+            }
+            else{
+                throw new UsernameNotFoundException("User not found");
+            }
+
+            }
 
 
-    public CustomerProfileDto updateProfile(String username){
-        Customer customer=new Customer();
-        customerProfileDto.setFirstName(customer.getFirstName());
-        customerProfileDto.setLastName(customer.getLastName());
-        customerProfileDto.setId(customer.getId());
-        customerProfileDto.setContact(customer.getContact());
 
-        return customerProfileDto;
+//Update password
+@Transactional
+@Modifying
+public String updatePassword(Long id, String oldPass, String newPass, String confirmPass, HttpServletResponse httpServletResponse) {
+    Optional<User> user = userRepository.findById(id);
+
+    if (user.isPresent()) {
+        if (passwordEncoder.matches(oldPass, user.get().getPassword())) {
+
+            if (newPass.equals(confirmPass)) {
+                user.get().setPassword(passwordEncoder.encode(newPass));
+                userRepository.save(user.get());
+
+                String email = user.get().getEmail();
+                emailNotificationService.sendNotification("Password Changed", "Your password has changed", email);
+
+                return "Password successfully changed";
+            } else {
+                httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }
+        } else {
+            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    } else {
+
+        throw new UsernameNotFoundException("user not found");
+
     }
+    return "Success";
+}
 
 
-
-
-    //view address
-
-//public String viewaddress(String email){
-//        Customer customer1=customerRepository.findByEmail(email);
-//        return customer1.getAddresses();
-//}
-
-
-    //updateAddress
-
-//public CustomerProfileDto updateAddress(){
-//        Customer customer=customerRepository.findByEmail();
-//        customer.setAddresses();
-//
-//}
-
-
-
-
-    //update password
-
-//    public CustomerProfileDto updatePassword(String email){
-//        Customer customer=customerRepository.findByEmail();
-//        customerProfileDto.
-//
-//    }
-
-
+//delete address
+@Transactional
+public String deleteAddress(Long id, HttpServletRequest request) {
+    Optional<Address> address = addressRepository.findById(id);
+    if (!address.isPresent()) {
+        throw  new UsernameNotFoundException("no address fount with id " + id);
+    }
+    addressRepository.deleteById(id);
+    return "Success";
+}
 
     public String validateCustomer(CustomerRegistrationDto customerDto) {
         StringBuilder sb = new StringBuilder();

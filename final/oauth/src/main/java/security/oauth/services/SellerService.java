@@ -6,20 +6,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import security.oauth.custom_validators.PasswordValidation;
+import security.oauth.dtos.SellerAddressDto;
 import security.oauth.dtos.SellerProfileDto;
 import security.oauth.dtos.SellerRegistrationDto;
 import security.oauth.entities.Address;
 import security.oauth.entities.Seller;
 import security.oauth.entities.User;
 import security.oauth.events.EmailNotificationService;
+import security.oauth.events.UserEmailToken;
 import security.oauth.repos.AddressRepository;
 import security.oauth.repos.SellerRepository;
 import security.oauth.repos.UserRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class SellerService {
@@ -27,6 +36,9 @@ public class SellerService {
     private UserRepository userRepository;
     @Autowired
     private SellerRepository sellerRepository;
+
+    @Autowired
+    private UserEmailToken userEmailToken;
 
     @Autowired
     AddressRepository addressRepository;
@@ -37,12 +49,15 @@ public class SellerService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    PasswordValidation passwordValidation;
+
 
 
     @Autowired
     ModelMapper modelMapper;
 
-    //Get seller Details
+    //view profile
 
     public SellerProfileDto getSellerDetials(Long userid){
         Optional<Seller> seller=sellerRepository.findById(userid);
@@ -57,7 +72,9 @@ public class SellerService {
     }
 
 
-    //Update seller
+
+
+    //Update profile
 
     @Transactional
     @Modifying
@@ -76,14 +93,48 @@ public class SellerService {
         }
     }
 
+
+    //Update password
+
+    @Transactional
+    @Modifying
+
+    public String passwordUpdate(@PathVariable(value = "id") Long id, @RequestParam String oldpassword, @RequestParam String newPassword, @RequestParam String confirmPassword, HttpServletResponse httpServletResponse){
+       //find speciafic user
+        Optional<User> user=userRepository.findById(id);
+        //if user exists then other wise throw exception
+        if(user.isPresent()) {
+            //give password is matches with users real password or not
+            if (passwordEncoder.matches(oldpassword, user.get().getPassword())) {
+                //new password and confirm password matching
+                if (newPassword.equals(confirmPassword)) {
+                    //setting encoded new password to users password field
+                    user.get().setPassword(passwordEncoder.encode(newPassword));
+                    userRepository.save(user.get());
+
+                    //sending registered user a mail to notify him about password change.
+                    String email = user.get().getEmail();
+                    emailNotificationService.sendNotification("Attention!! ", "Password changed successfully", email);
+
+                    return "Password changed successfully";
+                } else {
+                    httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                }
+            } else {
+                httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }
+        }
+        else {
+            throw new UsernameNotFoundException("User not found!!---->Enter right password!!");
+
+            }
+            return "Success!!";
+        }
+
+
+
+
     public String validateSeller(SellerRegistrationDto sellerDto) {
-        //first method to add fileds
-
-//        Seller seller=new Seller();
-//        seller.getLastName(sellerDto.getLastName());
-//
-
-        //Second method to map
 
         Seller seller = modelMapper.map(sellerDto, Seller.class);
 //Check that confirm password is same as actual password
@@ -96,28 +147,33 @@ public class SellerService {
         return "Done";
     }
 
+    //Update address
+
+
+    public String updateAddress(Long id, SellerAddressDto addressDto, HttpServletRequest request) {
+        Optional<Address> address = addressRepository.findById(id);
+        if (!address.isPresent()) {
+            throw  new UsernameNotFoundException("no address fount with id " + id);
+        }
+        Seller seller = sellerRepository.findByEmail(userEmailToken.getUserEmail(request));
+        Set<Address> addresses = seller.getAddresses();
+        addresses.forEach(a->{
+            if (a.getId() == address.get().getId()) {
+                a.setAddressLine(addressDto.getAddressLine());
+                a.setCity(addressDto.getCity());
+                a.setCountry(addressDto.getCountry());
+                a.setState(addressDto.getState());
+                a.setZipCode(addressDto.getZipCode());
+                a.setAddressLine(addressDto.getAddressLine());
+            }
+        });
+        sellerRepository.save(seller);
+        return "Success";
+    }
 
 
 
 
-//        StringBuilder sb = new StringBuilder();
-//        System.out.println("Seller Dto is : "+sellerDto);
-//        User user = userRepository.findByEmail(sellerDto.getEmail());
-//
-//        System.out.println("Seller is : "+user);
-//
-//        System.out.println("Gst number is : "+sellerDto.getgst());
-//        Seller seller = sellerRepository.findByGst(sellerDto.getgst());
-//        if (null!=user){
-//            sb.append("Email already exist");
-//        }else if(!sellerDto.getPassword().equals(sellerDto.getConfirmPassword())){
-//            sb.append("Password not matched");
-//        }else if(null!=seller){
-//            System.out.println("Seller Gst : "+seller);
-//            sb.append("Gst number exists");
-//        }else {
-//            sb.append("validated");
-//        }
 
     }
 

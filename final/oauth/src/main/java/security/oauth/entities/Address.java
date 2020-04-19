@@ -13,7 +13,7 @@ public class Address {
     private String state;
     private String country;
     private String addressLine;
-    private String zipCode;
+    private Integer zipCode;
     private String label;
 private Boolean isDeleted=false;
 @ManyToOne
@@ -68,7 +68,7 @@ private Boolean isDeleted=false;
         this.state = state;
     }
 
-    public Address(Long id, String city, String state, String country, String addressLine, String zipCode, String label, Boolean isDeleted) {
+    public Address(Long id, String city, String state, String country, String addressLine, Integer zipCode, String label, Boolean isDeleted) {
         this.id = id;
         this.city = city;
         this.state = state;
@@ -95,11 +95,11 @@ private Boolean isDeleted=false;
         this.addressLine = addressLine;
     }
 
-    public String getZipCode() {
+    public Integer getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(String zipCode) {
+    public void setZipCode(Integer zipCode) {
         this.zipCode = zipCode;
     }
 

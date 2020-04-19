@@ -10,21 +10,21 @@ public class PasswordValidation {
         return pass.matches(pattern);
     }
 
-    public boolean validatePassword(String pass, String cpass ) {
-        if (pass.equals(cpass)){
-            if (pass.matches(pattern)) {
-                if (cpass.matches(pattern)) {
+    public boolean validatePassword(String password, String confirmpassword ) {
+        if (password.equals(confirmpassword)){
+            if (password.matches(pattern)) {
+                if (confirmpassword.matches(pattern)) {
                     return true;
                 }
             }
         }
         return false;
     }
-    public boolean validPassword(String oldPass,String pass, String cpass ) {
+    public boolean validPassword(String oldPass,String password, String confirmpassword ) {
         if (oldPass.matches(pattern)) {
-            if (pass.equals(cpass)) {
-                if (pass.matches(pattern)) {
-                    if (cpass.matches(pattern)) {
+            if (password.equals(confirmpassword)) {
+                if (password.matches(pattern)) {
+                    if (confirmpassword.matches(pattern)) {
                         return true;
                     }
                 }

@@ -105,13 +105,4 @@ public class RegistrationController {
         return message;
     }
 
-    //RegisterAdmin
-
-    @PostMapping(path = "/admin")
-    public User registerAdmin(@Valid @RequestBody Admin admin){
-
-        User user = appUserDetailsService.registerAdmin(admin);
-
-        return user;
-    }
 }

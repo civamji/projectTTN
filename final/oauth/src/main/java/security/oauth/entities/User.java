@@ -6,7 +6,7 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String email;
     private String firstName;
@@ -22,7 +22,7 @@ public class User {
             ,inverseJoinColumns = @JoinColumn(name ="role_id",referencedColumnName = "id"))
     private Set<Roles> roles;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Address> addresses;
 
     public User(){

@@ -15,6 +15,7 @@ public class UserRegistrationDto {
     @NotNull
     @NotEmpty
     private String firstName;
+    ///optional
     private String middleName;
     @NotNull
     @NotEmpty
@@ -27,7 +28,7 @@ public class UserRegistrationDto {
 
     @NotNull
     @NotEmpty
-    @ValidPassword //custom annotation
+   // @ValidPassword //custom annotation
 
     private String password;
 

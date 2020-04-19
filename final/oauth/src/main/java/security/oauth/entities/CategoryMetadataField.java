@@ -27,6 +27,9 @@ public class CategoryMetadataField {
         }
     }
 
+    public CategoryMetadataField() {
+    }
+
     @Override
     public String toString() {
         return "CategoryMetadataField{" +

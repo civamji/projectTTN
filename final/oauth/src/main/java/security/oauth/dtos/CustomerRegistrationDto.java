@@ -12,8 +12,8 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class CustomerRegistrationDto extends UserRegistrationDto{
-//@NotNull
-//@NotEmpty
-//@Size(min=10,max=10)
+@NotNull
+@NotEmpty
+@Size(min=10,max=10)
     private String contact;
 }

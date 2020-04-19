@@ -23,6 +23,20 @@ public class CategoryMetadataFieldValuesId implements Serializable {
    private Long mid;
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CategoryMetadataFieldValuesId)) return false;
+        CategoryMetadataFieldValuesId that = (CategoryMetadataFieldValuesId) o;
+        return Objects.equals(cid, that.cid) &&
+                Objects.equals(mid, that.mid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cid, mid);
+    }
+
     //no arg Constructor
     public CategoryMetadataFieldValuesId() {
     }

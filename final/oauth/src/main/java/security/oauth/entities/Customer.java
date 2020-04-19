@@ -1,6 +1,7 @@
 package security.oauth.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -11,7 +12,6 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "user_id")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Customer extends User {
-
 private String contact;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

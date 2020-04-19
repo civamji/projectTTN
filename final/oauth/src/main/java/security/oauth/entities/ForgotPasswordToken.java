@@ -42,6 +42,10 @@ import java.util.Date;
             return new Date(cal.getTime().getTime());
         }
 
+
+        public ForgotPasswordToken() {
+        }
+
         public Long getId() {
             return id;
         }

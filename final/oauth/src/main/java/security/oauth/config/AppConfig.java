@@ -13,10 +13,10 @@ import java.util.Properties;
 
 @Configuration
 public class AppConfig {
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
+//    @Bean
+//    public ModelMapper modelMapper() {
+//        return new ModelMapper();
+//    }
 
     @Bean
     public LocaleResolver localeResolver(){

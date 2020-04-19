@@ -20,14 +20,14 @@ public class UserRegistrationDto {
     @NotEmpty
     private String lastName;
 
-//    @NotNull
-//    @NotEmpty
-//    @ValidEmail //Custom annotation
+    @NotNull
+    @NotEmpty
+    @ValidEmail //Custom annotation
        private String email;
 
-//    @NotNull
-//    @NotEmpty
-//    @ValidPassword //custom annotation
+    @NotNull
+    @NotEmpty
+    @ValidPassword //custom annotation
 
     private String password;
 

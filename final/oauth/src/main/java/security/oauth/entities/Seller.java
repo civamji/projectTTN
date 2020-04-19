@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@PrimaryKeyJoinColumn(name = "user_id")
 public class Seller extends User{
     private String gst;
     private String companyName;

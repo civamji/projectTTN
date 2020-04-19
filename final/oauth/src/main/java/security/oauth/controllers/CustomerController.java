@@ -1,23 +1,18 @@
 package security.oauth.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
 import security.oauth.custom_validators.PasswordValidation;
+import security.oauth.dtos.AddressDto;
 import security.oauth.dtos.CustomerProfileDto;
-import security.oauth.entities.Customer;
 import security.oauth.repos.CustomerRepository;
-import security.oauth.services.CurrentUserService;
 import security.oauth.services.CustomerService;
-import security.oauth.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "customer")
@@ -31,14 +26,14 @@ public class CustomerController {
     @Autowired
     private CustomerProfileDto customerDto;
 
-    @Autowired
-    private CurrentUserService currentUserService;
+//    @Autowired
+//    private CurrentUserService currentUserService;
 
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 
     @Autowired
     private PasswordValidation passwordValidation;
@@ -96,6 +91,26 @@ public String deleteAddress(@PathVariable Long id,HttpServletResponse response,H
     return getMessage;
 }
 
+
+//Update address
+
+    @PutMapping("/updateAddress/{id}")
+    public String updateAddress(@PathVariable Long id, @RequestBody AddressDto addressDto, HttpServletResponse response, HttpServletRequest request) {
+        String getMessage = customerService.updateAddress(id,addressDto,request);
+        if ("Success".contentEquals(getMessage)) {
+            response.setStatus(HttpServletResponse.SC_CREATED);
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        return getMessage;
+    }
+
+    //add address
+
+    @PutMapping("/add-address/{id}")
+    public String addAddress(@Valid @RequestBody AddressDto addressDto,@PathVariable(value = "id") Long id){
+        return customerService.addAddress(addressDto,id);
+    }
 
     
 }

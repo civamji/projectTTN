@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CustomerService {
@@ -38,11 +39,6 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Autowired
-    private CustomerProfileDto customerProfileDto;
-
-    @Autowired
-    private AddressDto addressDto;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -60,39 +56,35 @@ public class CustomerService {
 //show current user profile
 
 
-    public CustomerProfileDto showCustomerProfile(Long id){
+    public CustomerProfileDto showCustomerProfile(Long id) {
         Optional<Customer> customer = customerRepository.findById(id);
-        if(customer.isPresent()){
-            CustomerProfileDto customerProfileDto=new CustomerProfileDto();
-            BeanUtils.copyProperties(customer.get(),customerProfileDto);
+        if (customer.isPresent()) {
+            CustomerProfileDto customerProfileDto = new CustomerProfileDto();
+            BeanUtils.copyProperties(customer.get(), customerProfileDto);
             return customerProfileDto;
-        }
-        else {
-        throw new UsernameNotFoundException("User not found");
+        } else {
+            throw new UsernameNotFoundException("User not found");
         }
     }
 
     //show address
 
-    public MappingJacksonValue showCustomerAddress(Long id){
-    Optional<Customer> customer=customerRepository.findById(id);
-    if(customer.isPresent())
-    {
-        CustomerProfileDto customerDto=new CustomerProfileDto();
-        BeanUtils.copyProperties(customer.get(),customerDto);
-        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("addresses");
-     //   FilterProvider filterProvider = new SimpleFilterProvider().addFilter("CustomerFilter", filter);
+    public MappingJacksonValue showCustomerAddress(Long id) {
+        Optional<Customer> customer = customerRepository.findById(id);
+        if (customer.isPresent()) {
+            CustomerProfileDto customerDto = new CustomerProfileDto();
+            BeanUtils.copyProperties(customer.get(), customerDto);
+            SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("addresses");
+            //   FilterProvider filterProvider = new SimpleFilterProvider().addFilter("CustomerFilter", filter);
 
-        MappingJacksonValue mappingJacksonValue=new MappingJacksonValue(customerDto);
+            MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(customerDto);
 
-        return mappingJacksonValue;
-    }
-    else {
-        throw new UsernameNotFoundException("User Not Found");
-    }
+            return mappingJacksonValue;
+        } else {
+            throw new UsernameNotFoundException("User Not Found");
+        }
 
     }
-
 
 
     //show address
@@ -109,90 +101,110 @@ public class CustomerService {
     //Update profile
     @Transactional
     @Modifying
-    public String updateCustomer(CustomerProfileDto profileDto,Long id){
-        Optional<Customer> customer=customerRepository.findById(id);
-            BeanUtils.copyProperties(profileDto,customer);
-            if(customer.isPresent())
-            {
+    public String updateCustomer(CustomerProfileDto profileDto, Long id) {
+        Optional<Customer> customer = customerRepository.findById(id);
+        BeanUtils.copyProperties(profileDto, customer);
+        if (customer.isPresent()) {
             customer.get().setFirstName(profileDto.getFirstName());
             customer.get().setLastName(profileDto.getLastName());
             customer.get().setContact(profileDto.getContact());
-                customer.get().setEmail(profileDto.getEmail());
-                customerRepository.save(customer.get());
-                return "Profile updated successfully";
-            }
-            else{
-                throw new UsernameNotFoundException("User not found");
-            }
+            customer.get().setEmail(profileDto.getEmail());
+            customerRepository.save(customer.get());
+            return "Profile updated successfully";
+        } else {
+            throw new UsernameNotFoundException("User not found");
+        }
 
-            }
-
+    }
 
 
-//Update password
-@Transactional
-@Modifying
-public String updatePassword(Long id, String oldPass, String newPass, String confirmPass, HttpServletResponse httpServletResponse) {
-    Optional<User> user = userRepository.findById(id);
+    //Update password
+    @Transactional
+    @Modifying
+    public String updatePassword(Long id, String oldPass, String newPass, String confirmPass, HttpServletResponse httpServletResponse) {
+        Optional<User> user = userRepository.findById(id);
 
-    if (user.isPresent()) {
-        if (passwordEncoder.matches(oldPass, user.get().getPassword())) {
+        if (user.isPresent()) {
+            if (passwordEncoder.matches(oldPass, user.get().getPassword())) {
 
-            if (newPass.equals(confirmPass)) {
-                user.get().setPassword(passwordEncoder.encode(newPass));
-                userRepository.save(user.get());
+                if (newPass.equals(confirmPass)) {
+                    user.get().setPassword(passwordEncoder.encode(newPass));
+                    userRepository.save(user.get());
 
-                String email = user.get().getEmail();
-                emailNotificationService.sendNotification("Password Changed", "Your password has changed", email);
+                    String email = user.get().getEmail();
+                    emailNotificationService.sendNotification("Password Changed", "Your password has changed", email);
 
-                return "Password successfully changed";
+                    return "Password successfully changed";
+                } else {
+                    httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                }
             } else {
                 httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
         } else {
-            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+            throw new UsernameNotFoundException("user not found");
+
         }
-    } else {
-
-        throw new UsernameNotFoundException("user not found");
-
+        return "Success";
     }
-    return "Success";
-}
 
 
-//delete address
-@Transactional
-public String deleteAddress(Long id, HttpServletRequest request) {
-    Optional<Address> address = addressRepository.findById(id);
-    if (!address.isPresent()) {
-        throw  new UsernameNotFoundException("no address fount with id " + id);
+//update address
+
+    public String updateAddress(Long id, AddressDto addressDto, HttpServletRequest request) {
+        Optional<Address> address = addressRepository.findById(id);
+        if (!address.isPresent()) {
+            throw new UsernameNotFoundException("no address fount with id " + id);
+        }
+        CustomerProfileDto customerDto = new CustomerProfileDto();
+        Customer customer = customerRepository.findByEmail(customerDto.getEmail());
+        Set<Address> addresses = customer.getAddresses();
+        addresses.forEach(a -> {
+            if (a.getId() == address.get().getId()) {
+                a.setCity(addressDto.getCity());
+                a.setCountry(addressDto.getCountry());
+                a.setLabel(addressDto.getLabel());
+                a.setState(addressDto.getState());
+                a.setZipCode(addressDto.getZipCode());
+            }
+        });
+        customerRepository.save(customer);
+        return "Success";
     }
-    addressRepository.deleteById(id);
-    return "Success";
-}
+
+    //delete address
+    @Transactional
+    public String deleteAddress(Long id, HttpServletRequest request) {
+        Optional<Address> address = addressRepository.findById(id);
+        if (!address.isPresent()) {
+            throw new UsernameNotFoundException("no address fount with id " + id);
+        }
+        addressRepository.deleteById(id);
+        return "Success";
+    }
 
     public String validateCustomer(CustomerRegistrationDto customerDto) {
         StringBuilder sb = new StringBuilder();
         User user = userRepository.findByEmail(customerDto.getEmail());
-        if (null!=user){
+        if (null != user) {
             sb.append("Email already exist");
-        }else if(!customerDto.getPassword().equals(customerDto.getConfirmPassword())){
+        } else if (!customerDto.getPassword().equals(customerDto.getConfirmPassword())) {
             sb.append("Password not matched");
-        }else {
+        } else {
             sb.append("validated");
         }
         return sb.toString();
     }
 
 
-    public MappingJacksonValue getCustomerDetailsByEmail(String email){
+    public MappingJacksonValue getCustomerDetailsByEmail(String email) {
         Customer customer = customerRepository.findByEmail(email);
         CustomerRegistrationDto customerDto = new CustomerRegistrationDto();
-        BeanUtils.copyProperties(customer,customerDto);
+        BeanUtils.copyProperties(customer, customerDto);
 
-        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.serializeAllExcept("password","confirmPassword","accountNonLocked","roles");
-        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("CustomerDto-Filter",filter);
+        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.serializeAllExcept("password", "confirmPassword", "accountNonLocked", "roles");
+        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("CustomerDto-Filter", filter);
 
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(customerDto);
         mappingJacksonValue.setFilters(filterProvider);
@@ -200,5 +212,19 @@ public String deleteAddress(Long id, HttpServletRequest request) {
         return mappingJacksonValue;
     }
 
+
+    //add address
+    public String addAddress(AddressDto addressDto, Long id) {
+        Optional<Customer> customer = customerRepository.findById(id);
+        if (customer.isPresent()) {
+            Address address = new Address();
+            BeanUtils.copyProperties(addressDto, address);
+            addressRepository.save(address);
+            return "address added";
+            } else {
+            throw new UsernameNotFoundException("user not found");
+        }
+
+    }
 }
 

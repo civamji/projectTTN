@@ -51,22 +51,20 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     public void configure(final HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/admin/home").hasAnyRole("ADMIN")
-                .antMatchers("/seller/home").hasAnyRole("ADMIN","SELLER")
-                .antMatchers("/customer/home").hasAnyRole("ADMIN","CUSTOMER")
-                .antMatchers("/doLogout").hasAnyRole("ADMIN","CUSTOMER","SELLER")
-                .antMatchers("/activate/customer").anonymous()
-                .antMatchers("/activate/{id}").hasAnyRole("ADMIN")
-                .antMatchers("/deactivate/{id}").hasAnyRole("ADMIN")
-                .antMatchers("/register/customer").anonymous()
-                .antMatchers("/getSellerDetails/{user_id}").hasAnyRole("ADMIN","CUSTOMER","SELLER")
-                .antMatchers("/register/seller").anonymous()
-                .antMatchers("/resend-activation-link/customer").anonymous()
-                .antMatchers("/customers").hasAnyRole("ADMIN")
-                .antMatchers("/sellers").hasAnyRole("ADMIN")
-                .antMatchers("/forgot-password", "/reset-password").anonymous()
-                .antMatchers("/user-test").anonymous()
+                .antMatchers("/").anonymous()
+                .antMatchers("/v2/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**").anonymous()
+                .antMatchers("/register/**").permitAll()
+                .antMatchers("/logout/**").hasAnyRole("ADMIN","CUSTOMER","SELLER")
+                .antMatchers("/admin/home/**").hasAnyRole("ADMIN")
+                .antMatchers("/customer/home/**").hasAnyRole("CUSTOMER")
+                .antMatchers("/seller/home/**").hasAnyRole("SELLER")
+                .antMatchers("/forgot/Password/**").hasAnyRole("ADMIN","CUSTOMER","SELLER")
+                .antMatchers("/user/home/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

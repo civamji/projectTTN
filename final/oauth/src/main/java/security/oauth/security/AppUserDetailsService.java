@@ -108,11 +108,8 @@ public class AppUserDetailsService implements UserDetailsService {
         String encryptedPassword = passwordEncoder.encode("pass");
         System.out.println("Trying to authenticate user ::" + email);
         System.out.println("Encrypted Password ::"+encryptedPassword);
-
         //loadUserByName-->loadUserByEmail
         UserDetails userDetails = userDao.loadUserByEmail(email);
-
-
         return userDetails;
     }
 }

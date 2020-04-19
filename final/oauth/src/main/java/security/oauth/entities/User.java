@@ -48,6 +48,9 @@ public class User {
         this.addresses = addresses;
     }
 
+    public User(String email, String firstName, String middleName, String lastName) {
+    }
+
     public Long getId() {
         return id;
     }

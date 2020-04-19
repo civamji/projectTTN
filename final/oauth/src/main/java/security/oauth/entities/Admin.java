@@ -10,7 +10,7 @@ public class Admin extends User{
     }
 
 
-//    public Admin(String email, String firstName, String middleName, String lastName) {
-//        super(email, firstName, middleName, lastName);
-//    }
+    public Admin(String email, String firstName, String middleName, String lastName) {
+        super(email, firstName, middleName, lastName);
+    }
 }

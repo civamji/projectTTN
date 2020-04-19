@@ -48,8 +48,6 @@ public class BootStrap implements ApplicationRunner {
             roleSet.add(role2);
             admin.setRoles(roleSet);
 
-
-
             userRepository.save(admin);
             System.out.println("Total users saved::"+userRepository.count());
         }

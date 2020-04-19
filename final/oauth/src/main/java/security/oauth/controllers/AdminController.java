@@ -2,9 +2,13 @@ package security.oauth.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
+import security.oauth.dtos.CustomerProfileDto;
+import security.oauth.entities.User;
+import security.oauth.repos.UserRepository;
 import security.oauth.services.AdminService;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "admin/home")
@@ -13,23 +17,34 @@ public class AdminController {
         @Autowired
         private AdminService adminService;
 
+        @Autowired
+        private CustomerProfileDto customerProfileDto;
 
-        @GetMapping(path = "/")
-        public void welcome()
+        @Autowired
+        private UserRepository userRepository;
+
+
+        @GetMapping(path = "/print")
+        public String welcome()
         {
-            System.out.println("Welcome ADMIN!!!");
+            return "Hello";
+
         }
 
+//List<Dto> getCustomer()
+//{
+//    userrepo.findall();
+//
+//}
 
-        @GetMapping(path = "/customers")
-        public MappingJacksonValue getCustomers(@RequestParam(defaultValue = "0") String page, @RequestParam(defaultValue = "10")String size, @RequestParam(defaultValue = "userId") String SortBy){
-            return adminService.registeredCustomers(page, size, SortBy);
-        }
+//        @GetMapping(path = "/customer")
+//        public List<CustomerProfileDto> getCustomer(){
+//            Iterable<User> user=userRepository.findAll();
+//            return
+//        }
 
-        @GetMapping(path = "/sellers")
-        public MappingJacksonValue getSellers(@RequestParam(defaultValue = "0") String page, @RequestParam(defaultValue = "10")String size, @RequestParam(defaultValue = "userId") String SortBy){
-            return adminService.registeredSellers(page, size, SortBy);
-        }
+
+
 
         @PatchMapping(path = "/activateCustomer/{id}")
         public String activateCustomer(@PathVariable(value = "id") Long id, HttpServletResponse response){

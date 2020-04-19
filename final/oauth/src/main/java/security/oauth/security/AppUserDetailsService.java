@@ -8,11 +8,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import security.oauth.custom_validators.EmailValidator;
 import security.oauth.dtos.CustomerRegistrationDto;
 import security.oauth.dtos.SellerRegistrationDto;
 import security.oauth.entities.*;
 import security.oauth.events.EmailNotificationService;
 import security.oauth.repos.*;
+import security.oauth.services.EmailService;
 
 import javax.transaction.Transactional;
 import java.util.Date;
@@ -46,6 +48,9 @@ public class AppUserDetailsService implements UserDetailsService {
 
     @Autowired
     CustomerActivateRepository customerActivateRepository;
+
+    @Autowired
+    EmailValidator emailValidator;
 
     @Transactional
     public String registerCustomer(CustomerRegistrationDto customerDto){
@@ -102,14 +107,17 @@ public class AppUserDetailsService implements UserDetailsService {
 
 
 
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        boolean isValid = emailValidator.validateEmail(email);
+        if (!isValid) {
+            throw new RuntimeException("Email is invalid");
+        }
+
         String encryptedPassword = passwordEncoder.encode("pass");
         System.out.println("Trying to authenticate user ::" + email);
         System.out.println("Encrypted Password ::"+encryptedPassword);
-        //loadUserByName-->loadUserByEmail
-        UserDetails userDetails = userDao.loadUserByEmail(email);
+        UserDetails userDetails = userDao.loadUserByUserEmail(email);
         return userDetails;
     }
 }

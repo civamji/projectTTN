@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import security.oauth.entities.Admin;
 import security.oauth.entities.Customer;
 import security.oauth.entities.Seller;
+import security.oauth.entities.User;
 import security.oauth.events.EmailNotificationService;
 import security.oauth.repos.AdminRepository;
 import security.oauth.repos.CustomerRepository;
 import security.oauth.repos.SellerRepository;
+import security.oauth.repos.UserRepository;
 
 import javax.servlet.http.HttpServletResponse;
 import java.awt.print.Pageable;
@@ -26,127 +28,92 @@ import java.util.Optional;
 
 @Service
 public class AdminService {
-@Autowired
+    @Autowired
     private CustomerRepository customerRepository;
 
-@Autowired
-    private SellerRepository sellerRepository;
+    @Autowired
+    private SellerRepository  sellerRepository;
 
-@Autowired
-    private AdminRepository adminRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-@Autowired
+    @Autowired
     private EmailNotificationService emailNotificationService;
 
-@Autowired
+    @Autowired
     private CustomerActivateService customerActivateService;
 
-//to do partial update use patch
-
-    @PatchMapping("admin/activate/customer/{id}")
     public String activateCustomer(@PathVariable Long id, HttpServletResponse httpServletResponse) {
-        Optional<Admin> user = adminRepository.findById(id);
+        Optional<User> user = userRepository.findById(id);
         if (!user.isPresent()) {
             httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return "no user found with given id";
         }
         if (!user.get().isActive()) {
             user.get().setActive(true);
-            adminRepository.save(user.get());
+            userRepository.save(user.get());
             // trigger mail
-            emailNotificationService.sendNotification("ACTIVATED", "BINGOO YOUR ACCOUNT HAS BEEN ACTIVATED", user.get().getEmail());
+            emailNotificationService.sendNotification("ACTIVATED", "HEY CUSTOMER YOUR ACCOUNT HAS BEEN ACTIVATED", user.get().getEmail());
             return "Success";
         }
-        adminRepository.save(user.get());
+        userRepository.save(user.get());
         System.out.println("already activated");
         return "Success";
     }
 
-    @PatchMapping("admin/deactivate/customer/{id}")
     public String deactivateCustomer(@PathVariable Long id, HttpServletResponse httpServletResponse) {
-        Optional<Admin> user = adminRepository.findById(id);
+        Optional<User> user = userRepository.findById(id);
         if (!user.isPresent()) {
             httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return "no user found with given id";
         }
         if (user.get().isActive()) {
             user.get().setActive(false);
-            adminRepository.save(user.get());
+            userRepository.save(user.get());
             // trigger mail
-            emailNotificationService.sendNotification("DEACTIVATED", "OHH!! YOUR ACCOUNT HAS BEEN DEACTIVATED", user.get().getEmail());
+            emailNotificationService.sendNotification("DEACTIVATED", "HEY CUSTOMER YOUR ACCOUNT HAS BEEN DEACTIVATED", user.get().getEmail());
             return "Success";
         }
-        adminRepository.save(user.get());
+        userRepository.save(user.get());
         System.out.println("already deactivated");
         return "Success";
     }
 
-    @PatchMapping("admin/activate/seller/{id}")
     public String activateSeller(@PathVariable Long id, HttpServletResponse httpServletResponse) {
-        Optional<Admin> user = adminRepository.findById(id);
+        Optional<User> user = userRepository.findById(id);
         if (!user.isPresent()) {
             httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return "no user found with given id";
         }
         if (!user.get().isActive()) {
             user.get().setActive(true);
-            adminRepository.save(user.get());
+            userRepository.save(user.get());
             // trigger mail
-            emailNotificationService.sendNotification("ACTIVATED", "BINGOO!! YOUR ACCOUNT HAS BEEN ACTIVATED", user.get().getEmail());
+            emailNotificationService.sendNotification("ACTIVATED", "HEY SELLER YOUR ACCOUNT HAS BEEN ACTIVATED", user.get().getEmail());
             return "Success";
         }
-        adminRepository.save(user.get());
+        userRepository.save(user.get());
         System.out.println("already activated");
         return "Success";
     }
 
-    @PatchMapping("admin/deactivate/seller/{id}")
     public String deactivateSeller(@PathVariable Long id, HttpServletResponse httpServletResponse) {
-        Optional<Admin> user = adminRepository.findById(id);
+        Optional<User> user = userRepository.findById(id);
         if (!user.isPresent()) {
             httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return "no user found with given id";
         }
         if (user.get().isActive()) {
             user.get().setActive(false);
-            adminRepository.save(user.get());
+            userRepository.save(user.get());
             // trigger mail
-            emailNotificationService.sendNotification("DEACTIVATED", "YOUR ACCOUNT HAS BEEN DEACTIVATED", user.get().getEmail());
+            emailNotificationService.sendNotification("DEACTIVATED", "HEY SELLER YOUR ACCOUNT HAS BEEN DEACTIVATED", user.get().getEmail());
             return "Success";
         }
-        adminRepository.save(user.get());
+        userRepository.save(user.get());
         System.out.println("already deactivated");
         return "Success";
     }
 
-//Uncomment this
-
-    //ALERT EXPLICITLY CASTED TO PAGEABLE
-
-
-    public MappingJacksonValue registeredCustomers(String page, String size, String SortBy){
-        List<Customer> customers = customerRepository.findAll(PageRequest.of(Integer.parseInt(page),Integer.parseInt(size), Sort.by(SortBy))).getContent();
-        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("userId","firstName","lastName","email","active");
-        FilterProvider filterProvider =  new SimpleFilterProvider().addFilter("CustomerFilter",filter);
-
-        MappingJacksonValue message = new MappingJacksonValue(customers);
-
-        message.setFilters(filterProvider);
-        return message;
-    }
-
-
-    //ALERT EXPLICITLY CASTED TO PAGEABLE
-
-    public MappingJacksonValue registeredSellers(String page,String size, String SortBy){
-        List<Seller> sellers = sellerRepository.findAll( PageRequest.of(Integer.parseInt(page),Integer.parseInt(size), Sort.by(SortBy))).getContent();
-        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("userId","firstName","lastName","email","active","companyName","companyContact","addresses");
-        FilterProvider filterProvider =  new SimpleFilterProvider().addFilter("Seller-Filter",filter);
-
-        MappingJacksonValue message = new MappingJacksonValue(sellers);
-
-        message.setFilters(filterProvider);
-        return message;
-    }
 
 }

@@ -1,34 +1,27 @@
 package security.oauth.security;
 
 
+
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
 public class AppUser implements UserDetails {
-
-
     private String username;
     private String password;
-    List<SimpleGrantedAuthority> grantedAuthorities;
-    private boolean isActive;
-    private boolean isCredentialsNonExpired;
+    List<GrantedAuthorityImpl> grantedAuthorities;
+    private boolean isEnabled;
     private boolean isAccountNonLocked;
+    private boolean isCredentialsNonExpired;
 
-//    private Set<Role> roles;
-//
-//    private Set<Address> addresses;
-
-
-    public AppUser(String username, String password, List<SimpleGrantedAuthority> grantedAuthorities, boolean isActive, boolean isCredentialsNonExpired, boolean isAccountNonLocked) {
+    public AppUser(String username, String password, List<GrantedAuthorityImpl> grantedAuthorities,boolean isEnabled, boolean isAccountNonLocked, boolean isCredentialsNonExpired) {
         this.username = username;
         this.password = password;
         this.grantedAuthorities = grantedAuthorities;
-        this.isActive = isActive;
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
+        this.isEnabled = isEnabled;
         this.isAccountNonLocked = isAccountNonLocked;
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
     }
 
     @Override
@@ -37,36 +30,23 @@ public class AppUser implements UserDetails {
     }
 
     @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
     public String getUsername() {
         return username;
     }
 
     @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public List<SimpleGrantedAuthority> getGrantedAuthorities() {
-        return grantedAuthorities;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return isCredentialsNonExpired;
-    }
-
-    @Override
     public boolean isEnabled() {
-        return false;
+        return isEnabled;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
     @Override
@@ -75,14 +55,19 @@ public class AppUser implements UserDetails {
     }
 
     @Override
+    public boolean isCredentialsNonExpired() {
+        return isCredentialsNonExpired;
+    }
+
+    @Override
     public String toString() {
         return "AppUser{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", grantedAuthorities=" + grantedAuthorities +
-                ", isActive=" + isActive +
-                ", isCredentialsNonExpired=" + isCredentialsNonExpired +
+                ", isEnabled=" + isEnabled +
                 ", isAccountNonLocked=" + isAccountNonLocked +
+                ", isCredentialsNonExpired=" + isCredentialsNonExpired +
                 '}';
     }
 }

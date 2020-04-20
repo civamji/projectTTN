@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import security.oauth.custom_validators.EmailValidator;
+import security.oauth.custom_validators.GSTValidator;
 import security.oauth.dtos.CustomerRegistrationDto;
 import security.oauth.dtos.SellerRegistrationDto;
 import security.oauth.entities.*;
@@ -55,6 +56,9 @@ public class AppUserDetailsService implements UserDetailsService {
 
     @Autowired
     EmailValidator emailValidator;
+//
+//    @Autowired
+//    GSTValidator gstValidator;
 
     @Transactional
     public String registerCustomer(CustomerRegistrationDto customerDto){
@@ -88,14 +92,16 @@ public class AppUserDetailsService implements UserDetailsService {
 
     @Transactional
     public String  registerSeller(SellerRegistrationDto sellerDto){
-
         Seller seller = new Seller();
         BeanUtils.copyProperties(sellerDto, seller);
         Roles role = new Roles();
         role.setAuthority("ROLE_SELLER");
+
+
         Set<Roles> roleSet = new HashSet<>();
         roleSet.add(role);
         seller.setRoles(roleSet);
+        System.out.println("role set");
         seller.setActive(true);
         seller.setLocked(false);
         seller.setExpired(false);
@@ -104,6 +110,8 @@ public class AppUserDetailsService implements UserDetailsService {
         address.setUser(seller);
         addressRepository.save(address);
 
+        System.out.println("save address");
+
         ActivateCustomer customerActivate = new ActivateCustomer();
         customerActivate.setUserEmail(seller.getEmail());
 
@@ -111,8 +119,9 @@ public class AppUserDetailsService implements UserDetailsService {
         String email = seller.getEmail();
 
         emailNotificationService.sendNotification("ACCOUNT CREATED ", "Your account has been created", email);
-
+        System.out.println("Email send");
         userRepository.save(seller);
+
         return "Registered Successfully";
     }
 //        Seller seller = new Seller();

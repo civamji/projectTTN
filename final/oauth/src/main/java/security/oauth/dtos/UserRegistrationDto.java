@@ -22,7 +22,7 @@ public class UserRegistrationDto {
 
     @NotNull
     @NotEmpty
-    @ValidEmail //Custom annotation
+   // @ValidEmail //Custom annotation
        private String email;
 
     @NotNull

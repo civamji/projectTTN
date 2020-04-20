@@ -1,4 +1,4 @@
-package security.oauth.services;
+package security.oauth.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,14 +16,16 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter{
+public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
+
     @Autowired
     PasswordEncoder passwordEncoder;
+
     @Autowired
     AuthenticationManager authenticationManager;
+
     @Autowired
     UserDetailsService userDetailsService;
 
@@ -39,11 +41,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         defaultTokenServices.setSupportRefreshToken(true);
         return defaultTokenServices;
     }
+
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(tokenStore()).userDetailsService(userDetailsService)
                 .authenticationManager(authenticationManager)
-                .accessTokenConverter(accessTokenConverter());;
+                .accessTokenConverter(accessTokenConverter())
+        ;
+
     }
     @Bean
     JwtAccessTokenConverter accessTokenConverter(){
@@ -51,10 +56,13 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         jwtAccessTokenConverter.setSigningKey("1234");
         return jwtAccessTokenConverter;
     }
+
     @Bean
     public TokenStore tokenStore() {
+        //  return new InMemoryTokenStore();
         return new JwtTokenStore(accessTokenConverter());
     }
+
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
@@ -65,10 +73,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .scopes("app")
                 .accessTokenValiditySeconds(7*24*60);
     }
+
     @Override
     public void configure(AuthorizationServerSecurityConfigurer authorizationServerSecurityConfigurer) throws Exception {
         authorizationServerSecurityConfigurer.allowFormAuthenticationForClients();
     }
+
 
 }
 

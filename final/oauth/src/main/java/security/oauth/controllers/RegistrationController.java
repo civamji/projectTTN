@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
+import security.oauth.dtos.CustomerProfileDto;
 import security.oauth.dtos.CustomerRegistrationDto;
 import security.oauth.dtos.SellerProfileDto;
 import security.oauth.dtos.SellerRegistrationDto;
@@ -22,7 +23,6 @@ public class RegistrationController {
 
     @Autowired
     private TokenStore tokenStore;
-
 
 //    @Autowired
 //    private SellerRepository sellerRepository;
@@ -58,14 +58,16 @@ public class RegistrationController {
     //registerCustomer
 
     @PostMapping(path = "/customer")
-    public String registerCustomer(@Valid @RequestBody CustomerRegistrationDto customerDto, HttpServletResponse response) {
-        if (customerService.validateCustomer(customerDto).equals("validated")) {
-            response.setStatus(HttpServletResponse.SC_CREATED);
-            return appUserDetailsService.registerCustomer(customerDto);
+    public String registerCustomer(@Valid @RequestBody CustomerRegistrationDto customerDto, HttpServletResponse httpServletResponse){
+        String message=appUserDetailsService.registerCustomer(customerDto);
+        System.out.println(message + "Customer");
+        // content equals
+        if ("Registered Successfully".equals(message)) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_CREATED);
         } else {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return customerService.validateCustomer(customerDto);
+            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
+        return message;
     }
 
 

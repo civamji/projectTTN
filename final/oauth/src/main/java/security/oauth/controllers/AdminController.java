@@ -18,17 +18,12 @@ public class AdminController {
         private AdminService adminService;
 
         @Autowired
-        private CustomerProfileDto customerProfileDto;
-
-        @Autowired
         private UserRepository userRepository;
 
 
         @GetMapping(path = "/print")
-        public String welcome()
-        {
-            return "Hello";
-
+        public String printingHello() {
+            return "Welcome";
         }
 
 //List<Dto> getCustomer()

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(path = "customer")
+@RequestMapping(path = "customer/home")
 public class CustomerController {
     @Autowired
     private TokenStore tokenStore;

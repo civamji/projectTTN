@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import security.oauth.entities.User;
 import security.oauth.entities.UserLoginAttempts;
@@ -26,6 +28,13 @@ UserAttemptsReposiitory userAttemptsRepo;
     public void authenticationFailed(AuthenticationFailureBadCredentialsEvent event) {
 
     int counter;
+
+
+
+    // get current looged in user
+//    Authentication authentication= (Authentication) new SecurityContextHolder().getContext();
+//    String currentprincipal=authentication.getName();
+
     String userEmail = (String) event.getAuthentication().getPrincipal();
     Optional<UserLoginAttempts> userLoginFailCounter = userAttemptsRepo.findByEmail(userEmail);
 

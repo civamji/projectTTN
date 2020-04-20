@@ -38,6 +38,10 @@ public class AppUserDetailsService implements UserDetailsService {
     CustomerRepository customerRepository;
 
     @Autowired
+
+    AddressRepository addressRepository;
+
+    @Autowired
     SellerRepository sellerRepository;
 
     @Autowired
@@ -84,18 +88,45 @@ public class AppUserDetailsService implements UserDetailsService {
 
     @Transactional
     public String  registerSeller(SellerRegistrationDto sellerDto){
+
         Seller seller = new Seller();
         BeanUtils.copyProperties(sellerDto, seller);
+        Roles role = new Roles();
+        role.setAuthority("ROLE_SELLER");
+        Set<Roles> roleSet = new HashSet<>();
+        roleSet.add(role);
+        seller.setRoles(roleSet);
+        seller.setActive(true);
+        seller.setLocked(false);
+        seller.setExpired(false);
 
-        if(seller.getAddresses().size() == 1) {
-            String pass = passwordEncoder.encode(seller.getPassword());
-            seller.setPassword(pass);
-            sellerRepository.save(seller);
-            return "Registration Successful";
-        }else {
-            return "Seller cannot have multiple addresses";
-        }
+        Address address=new Address();
+        address.setUser(seller);
+        addressRepository.save(address);
+
+        ActivateCustomer customerActivate = new ActivateCustomer();
+        customerActivate.setUserEmail(seller.getEmail());
+
+        customerActivateRepository.save(customerActivate);
+        String email = seller.getEmail();
+
+        emailNotificationService.sendNotification("ACCOUNT CREATED ", "Your account has been created", email);
+
+        userRepository.save(seller);
+        return "Registered Successfully";
     }
+//        Seller seller = new Seller();
+//        BeanUtils.copyProperties(sellerDto, seller);
+//
+//        if(seller.getAddresses().size() == 1) {
+//            String pass = passwordEncoder.encode(seller.getPassword());
+//            seller.setPassword(pass);
+//            sellerRepository.save(seller);
+//            return "Registration Successful";
+//        }else {
+//            return "Seller cannot have multiple addresses";
+//        }
+
 
     @Transactional
     public User registerAdmin(Admin admin)

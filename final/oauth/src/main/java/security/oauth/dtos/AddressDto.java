@@ -12,7 +12,7 @@ public class AddressDto {
 
     private String country;
     private String addressLine;
-    private Integer zipCode;
+    private String zipCode;
     private String label;
 
     public String getCity() {
@@ -47,11 +47,11 @@ public class AddressDto {
         this.addressLine = addressLine;
     }
 
-    public Integer getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(Integer zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 

@@ -23,6 +23,10 @@ public class Category {
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
     private Set<Category> subCategories;
 
+
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Set<CategoryMetadataFieldValues> categoryMetadataFieldValues;
+
     public Category() {
     }
 

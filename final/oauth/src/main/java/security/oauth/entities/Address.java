@@ -13,13 +13,24 @@ public class Address {
     private String state;
     private String country;
     private String addressLine;
-    private Integer zipCode;
+    private String zipCode;
     private String label;
 private Boolean isDeleted=false;
 @ManyToOne
 @JoinColumn(name = "customer_user_id")
     private User user;
 
+    public Address() {
+    }
+
+    public Address(String city, String state, String country, String addressLine, String zipCode, String label) {
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.addressLine = addressLine;
+        this.zipCode = zipCode;
+        this.label = label;
+    }
 
     public User getUser() {
         return user;
@@ -68,7 +79,7 @@ private Boolean isDeleted=false;
         this.state = state;
     }
 
-    public Address(Long id, String city, String state, String country, String addressLine, Integer zipCode, String label, Boolean isDeleted) {
+    public Address(Long id, String city, String state, String country, String addressLine, String zipCode, String label, Boolean isDeleted) {
         this.id = id;
         this.city = city;
         this.state = state;
@@ -95,11 +106,11 @@ private Boolean isDeleted=false;
         this.addressLine = addressLine;
     }
 
-    public Integer getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(Integer zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 
@@ -119,8 +130,6 @@ private Boolean isDeleted=false;
         isDeleted = deleted;
     }
 
-    public Address() {
-    }
 
 
 }

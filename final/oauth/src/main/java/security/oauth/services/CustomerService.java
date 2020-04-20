@@ -55,7 +55,6 @@ public class CustomerService {
 
 //show current user profile
 
-
     public CustomerProfileDto showCustomerProfile(Long id) {
         Optional<Customer> customer = customerRepository.findById(id);
         if (customer.isPresent()) {
@@ -75,7 +74,7 @@ public class CustomerService {
             CustomerProfileDto customerDto = new CustomerProfileDto();
             BeanUtils.copyProperties(customer.get(), customerDto);
             SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("addresses");
-            //   FilterProvider filterProvider = new SimpleFilterProvider().addFilter("CustomerFilter", filter);
+               FilterProvider filterProvider = new SimpleFilterProvider().addFilter("CustomerFilter", filter);
 
             MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(customerDto);
 

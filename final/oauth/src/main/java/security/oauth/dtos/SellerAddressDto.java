@@ -4,7 +4,7 @@ public class SellerAddressDto {
         private String country;
         private String city;
         private String state;
-        private Integer zipCode;
+        private String zipCode;
         private String addressLine;
 
         public String getCountry() {
@@ -31,11 +31,11 @@ public class SellerAddressDto {
             this.state = state;
         }
 
-        public Integer getZipCode() {
+        public String getZipCode() {
             return zipCode;
         }
 
-        public void setZipCode(Integer zipCode) {
+        public void setZipCode(String zipCode) {
             this.zipCode = zipCode;
         }
 

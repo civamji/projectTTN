@@ -11,8 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
-public class EmailValidator
-        implements ConstraintValidator<ValidEmail, String> {
+public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
 
     private Pattern pattern;
     private Matcher matcher;

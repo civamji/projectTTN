@@ -11,31 +11,23 @@ import javax.validation.constraints.NotNull;
 @Component
 public class CustomerProfileDto {
 @NotEmpty
-@NotNull
-    private Long id;
+//@NotNull
+    //private Long id;
 @NotNull
 private String firstName;
 private String lastName;
-private Boolean isActive=true;
+
+private String password;
+
+private String confirmPassword;
+
+//private Boolean isActive=true;
 @NotNull
 private String contact;
-private String image;
+//private String image;
 private String email;
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public CustomerProfileDto() {
     }
 
     public String getFirstName() {
@@ -54,12 +46,20 @@ private String email;
         this.lastName = lastName;
     }
 
-    public Boolean getActive() {
-        return isActive;
+    public String getPassword() {
+        return password;
     }
 
-    public void setActive(Boolean active) {
-        isActive = active;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getContact() {
@@ -70,11 +70,11 @@ private String email;
         this.contact = contact;
     }
 
-    public String getImage() {
-        return image;
+    public String getEmail() {
+        return email;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

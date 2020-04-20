@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
 import security.oauth.dtos.CustomerRegistrationDto;
+import security.oauth.dtos.SellerProfileDto;
 import security.oauth.dtos.SellerRegistrationDto;
 import security.oauth.entities.Admin;
 import security.oauth.entities.User;
@@ -21,6 +22,7 @@ public class RegistrationController {
 
     @Autowired
     private TokenStore tokenStore;
+
 
 //    @Autowired
 //    private SellerRepository sellerRepository;
@@ -48,10 +50,9 @@ public class RegistrationController {
     private SellerService sellerService;
 
     @GetMapping(path = "/hello")
-    public String printingHello(){
+    public String printingHello() {
         return "Welcome";
     }
-
 
 
     //registerCustomer
@@ -69,25 +70,36 @@ public class RegistrationController {
 
 
     //Register seller
-
     @PostMapping(path = "/seller")
-    public Object registerSeller(@Valid @RequestBody SellerRegistrationDto sellerDto, HttpServletResponse response){
-        if(sellerService.validateSeller(sellerDto).equals("validated")) {
-            response.setStatus(HttpServletResponse.SC_CREATED);
-            return appUserDetailsService.registerSeller(sellerDto);
-        }else {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return sellerService.validateSeller(sellerDto);
+    public String registerSeller(@Valid @RequestBody SellerRegistrationDto sellerDto, HttpServletResponse httpServletResponse) {
+        String message = appUserDetailsService.registerSeller(sellerDto);
+        System.out.println(message + "Seller");
+        if ("Registered Successfully".equals(message)) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_CREATED);
+        } else {
+            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
+        return message;
     }
+
+//    @PostMapping(path = "/seller")
+//    public Object registerSeller(@Valid @RequestBody SellerRegistrationDto sellerDto, HttpServletResponse response){
+//        if(sellerService.validateSeller(sellerDto).equals("validated")) {
+//            response.setStatus(HttpServletResponse.SC_CREATED);
+//            return appUserDetailsService.registerSeller(sellerDto);
+//        }else {
+//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//            return sellerService.validateSeller(sellerDto);
+//        }
+//    }
 
 
     //Confirm Customer Account
 
     @PutMapping(path = "/confirm-account")
-    public String confirmCustomerAccount(@RequestParam("token") String token, HttpServletResponse response){
+    public String confirmCustomerAccount(@RequestParam("token") String token, HttpServletResponse response) {
         String message = customerActivateService.activateCustomer(token);
-        if(!message.equals("Success")){
+        if (!message.equals("Success")) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
         return message;
@@ -97,12 +109,12 @@ public class RegistrationController {
     //Resend link
 
     @PostMapping(path = "/resend-activation")
-    public String resendLink(@RequestParam("email") String email,HttpServletResponse response){
+    public String resendLink(@RequestParam("email") String email, HttpServletResponse response) {
         String message = customerActivateService.resendLink(email);
-        if(!message.equals("Success")){
+        if (!message.equals("Success")) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
         return message;
     }
-
 }
+

@@ -1,5 +1,6 @@
 package security.oauth.entities;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -139,6 +140,9 @@ public class User {
         this.roles = roles;
     }
 
+
+
+
     public Set<Address> getAddresses() {
         return addresses;
     }
@@ -166,4 +170,23 @@ public class User {
     }
 
 
+    public void addAddress(Address address){
+        if(address!=null){
+            if(addresses == null)
+                addresses = new HashSet<Address>();
+
+            System.out.println("address added");
+            address.setUser(this);
+            addresses.add(address);
+        }
+    }
+
+    public void addRole(Roles role){
+        if(role!=null){
+            if(roles==null)
+                roles = new HashSet<>();
+
+            roles.add(role);
+        }
+    }
 }

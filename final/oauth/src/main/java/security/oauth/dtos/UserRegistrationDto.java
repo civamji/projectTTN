@@ -10,7 +10,6 @@ import security.oauth.custom_validators.ValidPassword;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-
 public class UserRegistrationDto {
     @NotNull
     @NotEmpty

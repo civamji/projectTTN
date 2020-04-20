@@ -14,10 +14,18 @@ public class Seller extends User{
     @OneToMany(mappedBy = "seller",cascade = CascadeType.ALL)
     private Set<Product> products;
 
-    public Seller()
-    {
+
+    public Seller() {
+        this.addRole(new Roles(2, "ROLE_SELLER"));
     }
 
+    public Seller(String email, String firstName, String middleName, String lastName, String GST, String companyName, String companyContact) {
+        super(email, firstName, middleName, lastName);
+        this.gst = gst.toUpperCase();
+        this.companyName = companyName;
+        this.companyContact = companyContact;
+        this.addRole(new Roles(2, "ROLE_SELLER"));
+    }
 
     public String getgst() {
         return gst;
@@ -61,14 +69,25 @@ public class Seller extends User{
                 ", companyContact='" + companyContact + '\'' +
                 '}';
     }
-//
-//    public void addProduct(Product product){
-//        if(product != null){
-//            if(products == null)
-//                products = new HashSet<Product>();
-//
-//            products.add(product);
-//            product.setSeller(this);
-//        }
-//    }
+
+    public void addProduct(Product product){
+        if(product != null){
+            if(products == null)
+                products = new HashSet<Product>();
+
+            products.add(product);
+
+            product.setSeller(this);
+        }
+    }
+
+    @Override
+    public void addAddress(Address address) {
+        if(address !=null){
+            Set<Address> addresses = new HashSet<Address>();
+            addresses.add(address);
+            this.setAddresses(addresses);
+            address.setUser(this);
+        }
+    }
 }

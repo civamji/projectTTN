@@ -24,6 +24,9 @@ public class ForgotPasswordController {
         return "Module Active!!";
     }
 
+
+    //Working
+
     @PostMapping("/token/{email}")
     public String getToken(@PathVariable String email, HttpServletRequest request, HttpServletResponse httpServletResponse) {
         String getMessage = forgotPasswordService.sendToken(email);
@@ -41,6 +44,8 @@ public class ForgotPasswordController {
         }
         return getMessage;
     }
+
+//Partially working
 
     @PatchMapping("/resetPassword")
     public String resetPassword(@RequestParam String email, @RequestParam String token, @RequestParam String pass, @RequestParam String cpass, HttpServletResponse httpServletResponse) {

@@ -23,7 +23,7 @@ public class Seller extends User{
         this.gst = gst.toUpperCase();
         this.companyName = companyName;
         this.companyContact = companyContact;
-        ///this.addRole(new Roles(2, "ROLE_SELLER"));
+        //this.addRole(new Roles(2, "ROLE_SELLER"));
     }
 
     public String getgst() {
@@ -80,7 +80,6 @@ public class Seller extends User{
         }
     }
 
-    @Override
     public void addAddress(Address address) {
         if(address !=null){
             Set<Address> addresses = new HashSet<Address>();

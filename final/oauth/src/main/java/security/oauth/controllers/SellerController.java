@@ -47,7 +47,7 @@ public class SellerController {
 
 
     @PatchMapping(path = "/updatePassword/{id}")
-    public String passwordUpdate(@PathVariable(value = "id") Long id, @RequestParam String oldPassword, String newPassword, String confirmPassword, HttpServletResponse response) {
+    public String passwordUpdate(@PathVariable(value = "id") Long id, @RequestParam String oldPassword,@RequestParam String newPassword,@RequestParam String confirmPassword, HttpServletResponse response) {
         if (passwordValidation.validPassword(oldPassword, newPassword, confirmPassword)) {
             return sellerService.passwordUpdate(id, oldPassword, newPassword, confirmPassword, response);
         } else {

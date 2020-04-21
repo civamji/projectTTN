@@ -6,6 +6,5 @@ import security.oauth.entities.Customer;
 
 public interface AddressRepository extends CrudRepository<Address,Long> {
 
-
  //   Customer findByFirstName(String username);
 }

@@ -15,9 +15,9 @@ public class SellerRegistrationDto extends UserRegistrationDto{
 
     @NotNull
     @NotEmpty
-//    @Size(min = 15, max = 15)
+    @Size(min = 15, max = 15)
 
-    //@ValidGST //custom annotation
+    @ValidGST
     private String gst;
 
     @NotNull

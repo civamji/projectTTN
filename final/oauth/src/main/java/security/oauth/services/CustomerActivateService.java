@@ -35,6 +35,7 @@ public class CustomerActivateService {
             if (activateCustomer.getToken().equals(null)) {
                 System.out.println("success");
             }
+
         } catch (NullPointerException ex) {
             return "invalid token";
         }

@@ -15,6 +15,7 @@ public class UserRegistrationDto {
     @NotEmpty
     private String firstName;
     ///optional
+
     private String middleName;
     @NotNull
     @NotEmpty
@@ -22,12 +23,12 @@ public class UserRegistrationDto {
 
     @NotNull
     @NotEmpty
-   // @ValidEmail //Custom annotation
+    @ValidEmail
        private String email;
 
     @NotNull
     @NotEmpty
-   // @ValidPassword //custom annotation
+   @ValidPassword //custom
 
     private String password;
 

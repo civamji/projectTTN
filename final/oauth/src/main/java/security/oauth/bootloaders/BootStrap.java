@@ -31,6 +31,11 @@ public class BootStrap implements ApplicationRunner {
 
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+
+            //set grant_type=refresh_token,client_id=live-test,client_secret=abcde,refresh_token={token} when try to get new token using refresh_token
+            //no username/password field
+
+
             Admin admin = new Admin();
             admin.setFirstName("Shivam");
             admin.setLastName("Sharma");
@@ -40,6 +45,8 @@ public class BootStrap implements ApplicationRunner {
             admin.setDeleted(false);
             admin.setLocked(false);
             admin.setExpired(false);
+            //admin.set
+
 
             Set<Admin> adminSet=new HashSet<>();
             adminSet.add(admin);
@@ -74,6 +81,7 @@ public class BootStrap implements ApplicationRunner {
         customer.setDeleted(false);
         customer.setExpired(false);
         customer.setLocked(false);
+        customer.setContact("9451023455");
 
         Set<Customer> customerSet=new HashSet<>();
         customerSet.add(customer);
@@ -96,6 +104,9 @@ public class BootStrap implements ApplicationRunner {
         seller.setDeleted(false);
         seller.setExpired(false);
         seller.setLocked(false);
+        seller.setCompnayContact("9524678234");
+
+        //seller.setCompnayContact(9809012345);
 
         Set<Seller> sellerSet=new HashSet<>();
         sellerSet.add(seller);

@@ -6,6 +6,7 @@ public class Token {
     private String tokenName;
 
 
+
     public Token(String tokenid, Long userid, String tokenName) {
         this.tokenid = tokenid;
         this.userid = userid;

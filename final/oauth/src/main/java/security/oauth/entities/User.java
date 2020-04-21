@@ -1,4 +1,7 @@
 package security.oauth.entities;
+
+import com.sun.istack.Nullable;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -6,9 +9,11 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(unique = true,nullable = false)
     private String email;
     private String firstName;
     private String middleName;
@@ -170,23 +175,23 @@ public class User {
     }
 
 
-    public void addAddress(Address address){
-        if(address!=null){
-            if(addresses == null)
-                addresses = new HashSet<Address>();
-
-            System.out.println("address added");
-            address.setUser(this);
-            addresses.add(address);
-        }
-    }
-
-    public void addRole(Roles role){
-        if(role!=null){
-            if(roles==null)
-                roles = new HashSet<>();
-
-            roles.add(role);
-        }
-    }
+//    public void addAddress(Address address){
+//        if(address!=null){
+//            if(addresses == null)
+//                addresses = new HashSet<Address>();
+//
+//            System.out.println("address added");
+//            address.setUser(this);
+//            addresses.add(address);
+//        }
+//    }
+//
+//    public void addRole(Roles role){
+//        if(role!=null){
+//            if(roles==null)
+//                roles = new HashSet<>();
+//
+//            roles.add(role);
+//        }
+//    }
 }

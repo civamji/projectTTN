@@ -20,10 +20,7 @@ import security.oauth.repos.*;
 import security.oauth.services.EmailService;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AppUserDetailsService implements UserDetailsService {
@@ -69,11 +66,13 @@ public class AppUserDetailsService implements UserDetailsService {
 
     @Transactional
     public String registerCustomer(CustomerRegistrationDto customerDto){
+      //  String email=customerDto.getEmail();
+        //Optional<Customer> customer=customerRepository.findByEmail(email);
+        //customer.isPresent()
 
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto, customer);
         String pass = passwordEncoder.encode(customer.getPassword());
-
         Set<Roles> roles = new HashSet<>();
         roles.add(new Roles("CUSTOMER"));
         customer.setPassword(pass);

@@ -38,6 +38,7 @@ public class SellerController {
 
     //update profile
 
+
     @PutMapping(path = "/profile-update/{user_id}")
     public String updateProfile(@Valid @RequestBody SellerProfileDto profileDto, @PathVariable("user_id") Long user_id){
         return sellerService.updateSeller(profileDto,user_id);
@@ -56,8 +57,7 @@ public class SellerController {
         }
     }
 
-
-            //update address
+    //update address
 
     @PutMapping(path = "/updateAddress/{id}")
 public String updateAddress(@PathVariable(value = "id") Long id,HttpServletResponse response)

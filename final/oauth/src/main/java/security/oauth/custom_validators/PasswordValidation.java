@@ -20,7 +20,7 @@ public class PasswordValidation {
         return false;
     }
     public boolean validPassword(String oldPass,String pass, String cpass ) {
-        if (oldPass.matches(pattern)) {
+
             if (pass.equals(cpass)) {
                 if (pass.matches(pattern)) {
                     if (cpass.matches(pattern)) {
@@ -28,7 +28,7 @@ public class PasswordValidation {
                     }
                 }
             }
-        }
+
         return false;
     }
 }

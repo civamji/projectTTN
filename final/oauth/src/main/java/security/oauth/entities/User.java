@@ -13,8 +13,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
     @Column(unique = true,nullable = false)
     private String email;
+
     private String firstName;
     private String middleName;
     private String lastName;

@@ -39,8 +39,8 @@ public class BootStrap implements ApplicationRunner {
             Admin admin = new Admin();
             admin.setFirstName("Shivam");
             admin.setLastName("Sharma");
-            admin.setEmail("sharmashivam637@gmail.com");
-            admin.setPassword(passwordEncoder.encode("pass"));
+            admin.setEmail("admin@gmail.com");
+            admin.setPassword(passwordEncoder.encode("admin"));
             admin.setActive(true);
             admin.setDeleted(false);
             admin.setLocked(false);
@@ -50,8 +50,6 @@ public class BootStrap implements ApplicationRunner {
 
             Set<Admin> adminSet=new HashSet<>();
             adminSet.add(admin);
-
-
             Roles roles = new Roles();
             roles.setAuthority("ROLE_ADMIN");
 //

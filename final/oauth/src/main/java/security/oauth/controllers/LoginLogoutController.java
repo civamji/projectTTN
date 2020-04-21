@@ -18,6 +18,7 @@ import java.util.Date;
 
 @RestController
 public class LoginLogoutController {
+
     @Autowired
     private TokenStore tokenStore;
 

@@ -8,6 +8,7 @@ import java.util.Date;
 
 @Entity
 public class ActivateCustomer {
+
 private static final int EXPIRATION= 60*24;
 @Id
 @GeneratedValue(strategy = GenerationType.SEQUENCE)

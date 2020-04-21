@@ -85,6 +85,8 @@ public class SellerService {
             seller.get().setLastName(sellerProfileDto.getLastName());
             seller.get().setCompnayContact(sellerProfileDto.getCompanyContact());
             seller.get().setgst(sellerProfileDto.getGst());
+            
+            //seller.get().setId(sellerProfileDto.getId());
 
             sellerRepository.save(seller.get());
             return "Profile update Successfully";

@@ -9,7 +9,7 @@ private Long id;
 @NotEmpty
 private String firstName;
 private String lastName;
-@ValidGST
+//@ValidGST
 private String gst;
    @NotEmpty
     private String companyName;

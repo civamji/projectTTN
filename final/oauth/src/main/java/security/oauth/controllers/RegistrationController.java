@@ -98,14 +98,18 @@ public class RegistrationController {
 
     //Confirm Customer Account
 
-    @PutMapping(path = "/confirm-account")
-    public String confirmCustomerAccount(@RequestParam("token") String token, HttpServletResponse response) {
-        String message = customerActivateService.activateCustomer(token);
-        if (!message.equals("Success")) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        }
-        return message;
-    }
+//    @PutMapping(path = "/confirm-account")
+//    public String confirmCustomerAccount(@RequestParam("token") String token, HttpServletResponse response) {
+//        String message = customerActivateService.activateCustomer(token);
+//        if (!message.equals("Success")) {
+//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//        }
+//        return message;
+//    }
+
+    //confirm
+
+
 
 
     //Resend link

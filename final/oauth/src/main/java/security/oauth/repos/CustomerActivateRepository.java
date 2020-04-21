@@ -7,5 +7,5 @@ public interface CustomerActivateRepository extends CrudRepository<ActivateCusto
 
     ActivateCustomer findByUserEmail(String email);
     ActivateCustomer findByToken(String token);
-    void deleteByUserEmail(String email);
+    //void deleteByUserEmail(String email);
 }

@@ -3,6 +3,8 @@ package security.oauth.security;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -60,8 +62,14 @@ public class AppUserDetailsService implements UserDetailsService {
 //    @Autowired
 //    GSTValidator gstValidator;
 
+    private JavaMailSender javaMailSender;
+    public AppUserDetailsService(JavaMailSender javaMailSender){
+        this.javaMailSender=javaMailSender;
+    }
+
     @Transactional
     public String registerCustomer(CustomerRegistrationDto customerDto){
+
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto, customer);
         String pass = passwordEncoder.encode(customer.getPassword());
@@ -74,7 +82,19 @@ public class AppUserDetailsService implements UserDetailsService {
         customerRepository.save(customer);
 
         String token = UUID.randomUUID().toString();
+        //
+        SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
+        simpleMailMessage.setTo(customer.getEmail());
+        simpleMailMessage.setFrom("civamofficial@gmail.com");
+        simpleMailMessage.setSubject("Activation mail");
+        simpleMailMessage.setText(token);
+        javaMailSender.send(simpleMailMessage);
+        //
 
+       // Token token;
+        //set
+        //token repo
+        //save
         ActivateCustomer customerActivate = new ActivateCustomer();
         customerActivate.setToken(token);
         customerActivate.setUserEmail(customer.getEmail());

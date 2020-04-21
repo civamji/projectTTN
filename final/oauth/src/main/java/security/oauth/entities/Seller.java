@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "user_id")
+//@PrimaryKeyJoinColumn(name = "user_id")
 public class Seller extends User{
     private String gst;
     private String companyName;
@@ -16,7 +16,6 @@ public class Seller extends User{
 
 
     public Seller() {
-        this.addRole(new Roles(2, "ROLE_SELLER"));
     }
 
     public Seller(String email, String firstName, String middleName, String lastName, String GST, String companyName, String companyContact) {
@@ -24,7 +23,7 @@ public class Seller extends User{
         this.gst = gst.toUpperCase();
         this.companyName = companyName;
         this.companyContact = companyContact;
-        this.addRole(new Roles(2, "ROLE_SELLER"));
+        ///this.addRole(new Roles(2, "ROLE_SELLER"));
     }
 
     public String getgst() {

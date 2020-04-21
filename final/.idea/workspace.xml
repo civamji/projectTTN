@@ -79,10 +79,10 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="552" y="263" width="261" height="266" key="#Notifications/0.27.1366.741@0.27.1366.741" timestamp="1587271262458" />
-    <state x="491" y="83" width="374" height="626" key="#com.intellij.ide.util.MemberChooser" timestamp="1587358716864">
+    <state x="491" y="83" width="374" height="626" key="#com.intellij.ide.util.MemberChooser" timestamp="1587440636446">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="491" y="83" width="374" height="626" key="#com.intellij.ide.util.MemberChooser/0.27.1366.741@0.27.1366.741" timestamp="1587358716864" />
+    <state x="491" y="83" width="374" height="626" key="#com.intellij.ide.util.MemberChooser/0.27.1366.741@0.27.1366.741" timestamp="1587440636446" />
     <state x="436" y="264" width="494" height="272" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1587284574333">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
@@ -91,29 +91,29 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="476" y="156" width="424" height="484" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1587091923494" />
-    <state width="1154" height="142" key="GridCell.Tab.0.bottom" timestamp="1587394494122">
+    <state width="1154" height="62" key="GridCell.Tab.0.bottom" timestamp="1587406223353">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1154" height="142" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1587394494122" />
-    <state width="1154" height="142" key="GridCell.Tab.0.center" timestamp="1587394494121">
+    <state width="1154" height="62" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1587406223353" />
+    <state width="1154" height="62" key="GridCell.Tab.0.center" timestamp="1587406223353">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1154" height="142" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1587394494121" />
-    <state width="1154" height="142" key="GridCell.Tab.0.left" timestamp="1587394494121">
+    <state width="1154" height="62" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1587406223353" />
+    <state width="1154" height="62" key="GridCell.Tab.0.left" timestamp="1587406223352">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1154" height="142" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1587394494121" />
-    <state width="1154" height="142" key="GridCell.Tab.0.right" timestamp="1587394494121">
+    <state width="1154" height="62" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1587406223352" />
+    <state width="1154" height="62" key="GridCell.Tab.0.right" timestamp="1587406223353">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1154" height="142" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1587394494121" />
+    <state width="1154" height="62" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1587406223353" />
     <state x="379" y="154" width="598" height="485" key="refactoring.ChangeSignatureDialog" timestamp="1587358073711">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="379" y="154" width="598" height="485" key="refactoring.ChangeSignatureDialog/0.27.1366.741@0.27.1366.741" timestamp="1587358073711" />
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1587394140804">
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1587403062656">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1587394140804" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1587403062656" />
   </component>
 </project>

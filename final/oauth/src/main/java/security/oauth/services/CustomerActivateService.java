@@ -43,7 +43,7 @@ public class CustomerActivateService {
         long diffHours = diff / (60 * 60 * 1000);
         // if token expire
         if (diffHours > 24) {
-            customerActivateRepository.deleteByUserEmail(activateCustomer.getUserEmail());
+         //   customerActivateRepository.deleteByUserEmail(activateCustomer.getUserEmail());
 
             String newToken = UUID.randomUUID().toString();
 
@@ -63,7 +63,7 @@ public class CustomerActivateService {
             user.setActive(true);
             userRepository.save(user);
             emailNotificationService.sendNotification("ACCOUNT ACTIVATED", "Your account has been activated", activateCustomer.getUserEmail());
-            customerActivateRepository.deleteByUserEmail(activateCustomer.getUserEmail());
+           // customerActivateRepository.deleteByUserEmail(activateCustomer.getUserEmail());
             return "Success";
         }
 
@@ -84,7 +84,7 @@ public class CustomerActivateService {
             return "Account already active";
         }
         if (!user.isActive()) {
-            customerActivateRepository.deleteByUserEmail(email);
+       //     customerActivateRepository.deleteByUserEmail(email);
 
             String newToken = UUID.randomUUID().toString();
 

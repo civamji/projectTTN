@@ -7,10 +7,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import security.oauth.entities.Address;
-import security.oauth.entities.Admin;
-import security.oauth.entities.Roles;
-import security.oauth.entities.Seller;
+import security.oauth.entities.*;
 import security.oauth.repos.RolesRepository;
 import security.oauth.repos.SellerRepository;
 import security.oauth.repos.UserRepository;
@@ -35,7 +32,7 @@ public class BootStrap implements ApplicationRunner {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
             Admin admin = new Admin();
-            admin.setFirstName("Vishal");
+            admin.setFirstName("Shivam");
             admin.setLastName("Sharma");
             admin.setEmail("sharmashivam637@gmail.com");
             admin.setPassword(passwordEncoder.encode("pass"));
@@ -66,44 +63,51 @@ public class BootStrap implements ApplicationRunner {
             userRepository.save(admin);
 
 //copy paste give roles
+            //Creating customer
+
+        Customer customer=new Customer();
+        customer.setFirstName("Vishal");
+        customer.setLastName("Sharma");
+        customer.setPassword(passwordEncoder.encode("customer"));
+        customer.setEmail("customer@gmail.com");
+        customer.setActive(true);
+        customer.setDeleted(false);
+        customer.setExpired(false);
+        customer.setLocked(false);
+
+        Set<Customer> customerSet=new HashSet<>();
+        customerSet.add(customer);
+        Roles roles1 = new Roles();
+        roles1.setAuthority("ROLE_CUSTOMER");
+        Set<Roles> roleSet1 = new HashSet<>();
+        roleSet1.add(roles1);
+        customer.setRoles(roleSet1);
+        userRepository.save(customer);
 
 
-            //Adding seller
+        //Creating a seller
 
-//            Set<Roles> rolesSet1=new HashSet<>();
-//            rolesSet1.add(roles2);
-//
-//            Seller seller=new Seller();
-//            seller.setComapnyName("samsung");
-//            seller.setCompnayContact("8090604146");
-//            seller.setgst("asdfghjkloiuytr");
-//            seller.setFirstName("shivam");
-//            seller.setLastName("sharma");
-//            seller.setPassword("samsung@123");
-//            seller.setEmail("civamofficial@gmail.com");
-//            seller.setActive(true);
-//            seller.setDeleted(false);
-//
-//            seller.addRole(new Roles("ROLE_SELLER"));
-//
-//            seller.setRoles(rolesSet1);
-//
-//
-//
-//          //  userRepository.save(seller);
-//           // sellerRepository.save(seller);
-//
-//
-//
-//            Seller seller1 = new Seller("abc@tothenew.com", "seller", "", "seller", "bh7ht754r5", "amalgam pvt. lmt.", "9999988817");
-//            seller1.setPassword(passwordEncoder.encode("pass"));
-//            seller1.addAddress(new Address("A552", "UP", "Noida", "india", "229071", "office"));
-//            seller1.setActive(true);
-//            System.out.println("Total users saved::"+userRepository.count());
-//            seller1.setRoles(rolesSet1);
-//            userRepository.save(seller1);
-//            userRepository.save(seller);
+        Seller seller=new Seller();
+        seller.setFirstName("Ankit");
+        seller.setLastName("Sagar");
+        seller.setPassword(passwordEncoder.encode("seller"));
+        seller.setEmail("seller@gmail.com");
+        seller.setActive(true);
+        seller.setDeleted(false);
+        seller.setExpired(false);
+        seller.setLocked(false);
 
-        }
+        Set<Seller> sellerSet=new HashSet<>();
+        sellerSet.add(seller);
+        Roles roles2 = new Roles();
+        roles2.setAuthority("ROLE_SELLER");
+        Set<Roles> roleSet2 = new HashSet<>();
+        roleSet2.add(roles2);
+        customer.setRoles(roleSet2);
+        userRepository.save(seller);
+
+
+
+    }
     }
 

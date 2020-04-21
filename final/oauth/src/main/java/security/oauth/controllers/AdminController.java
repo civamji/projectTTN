@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "admin/home")
+@RequestMapping(path = "admin/home")//Working perfectly
 public class AdminController {
 
         @Autowired
@@ -26,20 +26,10 @@ public class AdminController {
             return "Welcome";
         }
 
-//List<Dto> getCustomer()
-//{
-//    userrepo.findall();
-//
-//}
 
-//        @GetMapping(path = "/customer")
-//        public List<CustomerProfileDto> getCustomer(){
-//            Iterable<User> user=userRepository.findAll();
-//            return
-//        }
+//oauth/token:Working
 
-
-
+//working
 
         @PatchMapping(path = "/activateCustomer/{id}")
         public String activateCustomer(@PathVariable(value = "id") Long id, HttpServletResponse response){
@@ -52,6 +42,8 @@ public class AdminController {
             return message;
         }
 
+
+        //working
         @PatchMapping(path = "/de-activateCustomer/{id}")
         public String deactivateCustomer(@PathVariable(value = "id") Long id,HttpServletResponse response){
             String message = adminService.deactivateCustomer(id,response);
@@ -61,6 +53,9 @@ public class AdminController {
             return message;
         }
 
+
+        //Working
+
         @PatchMapping(path = "/activateSeller/{id}")
         public String activateSeller(@PathVariable(value = "id") Long id, HttpServletResponse response){
             String message = adminService.activateSeller(id,response);
@@ -69,6 +64,8 @@ public class AdminController {
             }
             return message;
         }
+
+        //Working
 
         @PatchMapping(path = "/de-activateSeller/{id}")
         public String deactivateSeller(@PathVariable(value = "id") Long id, HttpServletResponse response){

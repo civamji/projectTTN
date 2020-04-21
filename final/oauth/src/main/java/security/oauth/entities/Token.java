@@ -5,7 +5,7 @@ public class Token {
     private Long userid;
     private String tokenName;
 
-    
+
     public Token(String tokenid, Long userid, String tokenName) {
         this.tokenid = tokenid;
         this.userid = userid;

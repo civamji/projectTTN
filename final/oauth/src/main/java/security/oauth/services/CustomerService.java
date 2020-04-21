@@ -66,6 +66,7 @@ public class CustomerService {
         }
     }
 
+
     //show address
 
     public MappingJacksonValue showCustomerAddress(Long id) {
@@ -117,7 +118,7 @@ public class CustomerService {
     }
 
 
-    //Update password
+    //Update password:Working--enter values in param
     @Transactional
     @Modifying
     public String updatePassword(Long id, String oldPass, String newPass, String confirmPass, HttpServletResponse httpServletResponse) {
@@ -141,14 +142,10 @@ public class CustomerService {
                 httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
         } else {
-
-            throw new UsernameNotFoundException("user not found");
-
+            throw new UsernameNotFoundException("User not found");
         }
         return "Success";
     }
-
-
 //update address
 
     public String updateAddress(Long id, AddressDto addressDto, HttpServletRequest request) {

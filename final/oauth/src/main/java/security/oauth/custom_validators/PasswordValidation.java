@@ -1,5 +1,4 @@
 package security.oauth.custom_validators;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -10,21 +9,21 @@ public class PasswordValidation {
         return pass.matches(pattern);
     }
 
-    public boolean validatePassword(String password, String confirmpassword ) {
-        if (password.equals(confirmpassword)){
-            if (password.matches(pattern)) {
-                if (confirmpassword.matches(pattern)) {
+    public boolean validatePassword(String pass, String cpass ) {
+        if (pass.equals(cpass)){
+            if (pass.matches(pattern)) {
+                if (cpass.matches(pattern)) {
                     return true;
                 }
             }
         }
         return false;
     }
-    public boolean validPassword(String oldPass,String password, String confirmpassword ) {
+    public boolean validPassword(String oldPass,String pass, String cpass ) {
         if (oldPass.matches(pattern)) {
-            if (password.equals(confirmpassword)) {
-                if (password.matches(pattern)) {
-                    if (confirmpassword.matches(pattern)) {
+            if (pass.equals(cpass)) {
+                if (pass.matches(pattern)) {
+                    if (cpass.matches(pattern)) {
                         return true;
                     }
                 }
@@ -33,5 +32,4 @@ public class PasswordValidation {
         return false;
     }
 }
-
 

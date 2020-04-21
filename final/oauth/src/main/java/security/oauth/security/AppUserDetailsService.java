@@ -89,12 +89,6 @@ public class AppUserDetailsService implements UserDetailsService {
         simpleMailMessage.setSubject("Activation mail");
         simpleMailMessage.setText(token);
         javaMailSender.send(simpleMailMessage);
-        //
-
-       // Token token;
-        //set
-        //token repo
-        //save
         ActivateCustomer customerActivate = new ActivateCustomer();
         customerActivate.setToken(token);
         customerActivate.setUserEmail(customer.getEmail());
@@ -114,6 +108,8 @@ public class AppUserDetailsService implements UserDetailsService {
     public String  registerSeller(SellerRegistrationDto sellerDto){
         Seller seller = new Seller();
         BeanUtils.copyProperties(sellerDto, seller);
+        String pass = passwordEncoder.encode(seller.getPassword());
+
         Roles role = new Roles();
         role.setAuthority("ROLE_SELLER");
 
@@ -125,6 +121,7 @@ public class AppUserDetailsService implements UserDetailsService {
         seller.setActive(true);
         seller.setLocked(false);
         seller.setExpired(false);
+        seller.setPassword(pass);
 
         Address address=new Address();
         address.setUser(seller);

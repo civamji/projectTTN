@@ -41,14 +41,14 @@ public class CustomerController {
 //total: 5 URI
 
     //1.
-    //customer profile
+    //customer profile:Working
 
     @GetMapping(path = "/getCustomerDetails/{id}")
     public CustomerProfileDto showCustomerProfile(@PathVariable("id") Long id){
         return customerService.showCustomerProfile(id);
     }
 
-//2.Get customer address
+//2.Get customer address:Partially Working
 
     @GetMapping(path = "/getCustomerAddresses/{id}")
     public MappingJacksonValue getCustomerAddress(@PathVariable("id") Long id){
@@ -57,7 +57,7 @@ public class CustomerController {
 
 
     //3.
-    //Update customer
+    //Update customer:Working well
     @PutMapping(path = "profile-update/{id}")
     public String updateProfile(@Valid @RequestBody CustomerProfileDto profileDto, @PathVariable("id") Long id){
         return customerService.updateCustomer(profileDto,id);
@@ -65,8 +65,7 @@ public class CustomerController {
 
 
 
-    //Update Password
-
+    //Update Password:Working enter values in Param
     @PatchMapping("/updatePassword/{id}")
     public String passwordUpdate(@PathVariable(value = "id") Long id,
                                  @RequestParam String oldPass,@RequestParam String newPass,@RequestParam String confirmPass, HttpServletResponse response) {

@@ -97,7 +97,7 @@ public class RegistrationController {
 
 
     //Confirm Customer Account
-
+//
 //    @PutMapping(path = "/confirm-account")
 //    public String confirmCustomerAccount(@RequestParam("token") String token, HttpServletResponse response) {
 //        String message = customerActivateService.activateCustomer(token);

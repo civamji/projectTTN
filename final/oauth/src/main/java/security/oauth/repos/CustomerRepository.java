@@ -13,6 +13,7 @@ public interface CustomerRepository extends CrudRepository<Customer,Long> {
     Customer findByEmail(String email);
     Page<Customer> findAll(Pageable pageable);
     Customer findByFirstName(String username);
+
     //Customer findByUsername(String username);
 
 }

@@ -7,6 +7,7 @@ import security.oauth.custom_validators.PasswordMatches;
 import security.oauth.custom_validators.ValidEmail;
 import security.oauth.custom_validators.ValidPassword;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -24,6 +25,7 @@ public class UserRegistrationDto {
     @NotNull
     @NotEmpty
     @ValidEmail
+    @Column(unique = true)
        private String email;
 
     @NotNull

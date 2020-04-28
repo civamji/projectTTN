@@ -15,6 +15,18 @@ public class AddressDto {
     private String zipCode;
     private String label;
 
+    public AddressDto() {
+    }
+
+    public AddressDto(@NotNull String city, String state, @NotNull String country, String addressLine, String zipCode, String label) {
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.addressLine = addressLine;
+        this.zipCode = zipCode;
+        this.label = label;
+    }
+
     public String getCity() {
         return city;
     }

@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import javax.swing.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 
 
 @Component
@@ -26,7 +28,6 @@ private String confirmPassword;
 private String contact;
 //private String image;
 private String email;
-
     public CustomerProfileDto() {
     }
 

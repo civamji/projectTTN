@@ -11,6 +11,7 @@ import security.oauth.entities.*;
 import security.oauth.repos.RolesRepository;
 import security.oauth.repos.SellerRepository;
 import security.oauth.repos.UserRepository;
+import security.oauth.services.CurrentUserService;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -104,18 +105,41 @@ public class BootStrap implements ApplicationRunner {
         seller.setLocked(false);
         seller.setCompnayContact("9524678234");
 
-        //seller.setCompnayContact(9809012345);
+     ///Adding address to seller.
+        Address address=new Address();
+        address.setAddressLine("sector 143");
+        address.setCity("Noida");
+        address.setCountry("India");
+        address.setDeleted(false);
+        address.setLabel("Home");
+        address.setState("Up");
+        address.setZipCode("201309");
+        Set<Address> sellerAddress=new HashSet<>();
+        sellerAddress.add(address);
+        //setting address to seller
+        seller.setAddresses(sellerAddress);
+
+        ///setting address to customer
+        customer.setAddresses(sellerAddress);
+
+
 
         Set<Seller> sellerSet=new HashSet<>();
+
         sellerSet.add(seller);
+
+        //Adding role to seller
         Roles roles2 = new Roles();
         roles2.setAuthority("ROLE_SELLER");
+
         Set<Roles> roleSet2 = new HashSet<>();
         roleSet2.add(roles2);
+
         customer.setRoles(roleSet2);
         userRepository.save(seller);
+        userRepository.save(customer);
 
-
+      //  Product product=new Product();
 
     }
     }

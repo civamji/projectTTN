@@ -43,6 +43,7 @@ public class AdminService {
     @Autowired
     private CustomerActivateService customerActivateService;
 
+
     public String activateCustomer(@PathVariable Long id, HttpServletResponse httpServletResponse) {
         Optional<User> user = userRepository.findById(id);
         if (!user.isPresent()) {

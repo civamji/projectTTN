@@ -1,6 +1,7 @@
 package security.oauth.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,16 +17,56 @@ public class Category {
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
     private Set<Product> products;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id")
     private Category parentCategory;
 
-    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Category> subCategories;
 
 
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<CategoryMetadataFieldValues> categoryMetadataFieldValues;
+
+
+    public Set<CategoryMetadataFieldValues> getCategoryMetadataFieldValues() {
+        return categoryMetadataFieldValues;
+    }
+
+    public void setCategoryMetadataFieldValues(Set<CategoryMetadataFieldValues> categoryMetadataFieldValues) {
+        this.categoryMetadataFieldValues = categoryMetadataFieldValues;
+    }
+
+    public void addSubCategory(Category category){
+        if(category != null){
+            if(subCategories == null)
+                subCategories = new HashSet<>();
+
+            subCategories.add(category);
+            category.setParentCategory(this);
+        }
+    }
+
+    public void addProduct(Product product){
+        if(product != null){
+            if(products == null)
+                products = new HashSet<Product>();
+
+            products.add(product);
+
+            product.setCategory(this);
+        }
+    }
+
+    public void addFieldValues(CategoryMetadataFieldValues fieldValue){
+        if(fieldValue != null){
+            if(categoryMetadataFieldValues==null)
+                categoryMetadataFieldValues = new HashSet<>();
+
+            categoryMetadataFieldValues.add(fieldValue);
+            fieldValue.setCategory(this);
+        }
+    }
 
     public Category() {
     }

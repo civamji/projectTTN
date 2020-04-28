@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +31,9 @@ import security.oauth.repos.UserRepository;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+import java.security.Principal;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -222,5 +227,46 @@ public class CustomerService {
         }
 
     }
+
+    public AddressDto getAddress(String username){
+
+       // Optional<Customer> customer=customerRepository.findByFirstName(username);
+      //  Optional<Customer> customer=customerRepository.findByFirstName(username);
+        AddressDto addressDto=new AddressDto();
+        Customer customer=customerRepository.findByFirstName(username);
+        Long id=customer.getId();
+        Optional<Address> address=addressRepository.findById(id);
+        BeanUtils.copyProperties(addressDto,address);
+        return addressDto;
+
+
+    }
+
+    //Updating address
+    public String addNewAddress(Principal principal, AddressDto newAddress) {
+        String username=principal.getName();
+      Customer  customer=customerRepository.findByFirstName(username);
+      Long id=customer.getId();
+      Optional<Address> address=addressRepository.findById(id);
+      BeanUtils.copyProperties(address,newAddress);
+      customerRepository.save(customer);
+      return "sucessfull";
+    }
+
+//
+//    public ResponseEntity<> getCustomerAddresses(String email) {
+//  {
+//            Customer customer = customerRepository.findByEmail(email);
+//            BaseVO response;
+//            Set<AddressDto> addressDtos = new HashSet<>();
+//            Set<Address> addresses = customer.getAddresses();
+//
+//            addresses.forEach(
+//                    (a)->addressDtos.add(addressService.toAddressDto(a))
+//            );
+//            response = new ResponseVO<Set>(addressDtos, null, new Date());
+//            return new ResponseEntity<>(response, HttpStatus.OK);
+//        }
+//    }
 }
 

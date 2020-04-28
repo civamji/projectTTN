@@ -8,7 +8,6 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
     private String city;
     private String state;
     private String country;
@@ -17,7 +16,7 @@ public class Address {
     private String label;
 private Boolean isDeleted=false;
 @ManyToOne
-@JoinColumn(name = "customer_user_id")
+@JoinColumn(name = "user_id")
     private User user;
 
     public Address() {
@@ -31,6 +30,7 @@ private Boolean isDeleted=false;
         this.zipCode = zipCode;
         this.label = label;
     }
+
 
     public User getUser() {
         return user;

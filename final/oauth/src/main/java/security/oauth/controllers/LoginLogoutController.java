@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.util.Date;
 
 @RestController
+@RequestMapping(path = "/login-logout")
 public class LoginLogoutController {
 
     @Autowired
@@ -26,9 +27,34 @@ public class LoginLogoutController {
     MessageSource messages;
 
 
+
     @GetMapping("/")
     public String index() {
         return "index";
+    }
+
+    //1 login as a selller
+
+    //2 login as a customer
+
+    //3.login as a admin
+
+    //4. logutcustomer
+
+    //5. logoutseller
+
+    //6. logoutadmin
+
+
+    @GetMapping("/doLogout")
+    public String logout(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null) {
+            String tokenValue = authHeader.replace("Bearer", "").trim();
+            OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
+            tokenStore.removeAccessToken(accessToken);
+        }
+        return "Logged out successfully";
     }
 }
 

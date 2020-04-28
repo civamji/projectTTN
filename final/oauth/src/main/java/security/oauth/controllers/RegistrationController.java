@@ -57,6 +57,7 @@ public class RegistrationController {
 
     //registerCustomer
 
+    //Customer can't register two time with same emailid
     @PostMapping(path = "/customer")
     public String registerCustomer(@Valid @RequestBody CustomerRegistrationDto customerDto, HttpServletResponse httpServletResponse){
         String message=appUserDetailsService.registerCustomer(customerDto);
@@ -98,6 +99,8 @@ public class RegistrationController {
 
     //Confirm Customer Account
 
+
+    //invalid token
     @PutMapping(path = "/confirm-account")
     public String confirmCustomerAccount(@RequestParam("token") String token, HttpServletResponse response) {
         String message = customerActivateService.activateCustomer(token);
@@ -113,7 +116,7 @@ public class RegistrationController {
 
 
     //Resend link
-
+        //Working
     @PostMapping(path = "/resend-activation")
     public String resendLink(@RequestParam("email") String email, HttpServletResponse response) {
         String message = customerActivateService.resendLink(email);

@@ -2,6 +2,8 @@ package security.oauth.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
 import security.oauth.custom_validators.PasswordValidation;
@@ -13,6 +15,7 @@ import security.oauth.services.CustomerService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping(path = "customer/home")
@@ -50,10 +53,38 @@ public class CustomerController {
 
 //2.Get customer address:Partially Working
 
+
     @GetMapping(path = "/getCustomerAddresses/{id}")
     public MappingJacksonValue getCustomerAddress(@PathVariable("id") Long id){
         return customerService.showCustomerAddress(id);
     }
+
+//Getting address of current customer
+
+    @GetMapping("/addresses")
+    public AddressDto getCustomerAddresses(Principal principal){
+
+        //Principal principal = request.getUserPrincipal();
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentPrincipalName = authentication.getName();
+//        return currentPrincipalName;
+
+
+//        String username = principal.getName();
+//        return username;
+
+        String username= principal.getName();
+
+        return customerService.getAddress(username);
+
+    }
+
+    //Updating address
+    @PostMapping("/addAddress")
+    public String addNewAddress(Principal principal,@RequestBody AddressDto addressToAdd){
+        return customerService.addNewAddress(principal,addressToAdd);
+    }
+
 
 
     //3.

@@ -13,7 +13,7 @@ public class CategoryMetadataFieldValues implements Serializable {
     @EmbeddedId()
     private CategoryMetadataFieldValuesId categoryMetadataFieldValuesId;
 
-    @ManyToOne(optional = false,cascade = CascadeType.ALL)
+    @ManyToOne(optional = false,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "categoryMetadataId",insertable = false,updatable = false,nullable = false)
 
     private CategoryMetadataField categoryMetadataField;

@@ -27,6 +27,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -81,10 +82,10 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="552" y="263" width="261" height="266" key="#Notifications/0.27.1366.741@0.27.1366.741" timestamp="1587271262458" />
-    <state x="491" y="83" width="374" height="626" key="#com.intellij.ide.util.MemberChooser" timestamp="1587440636446">
+    <state x="491" y="83" width="553" height="626" key="#com.intellij.ide.util.MemberChooser" timestamp="1588043070682">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="491" y="83" width="374" height="626" key="#com.intellij.ide.util.MemberChooser/0.27.1366.741@0.27.1366.741" timestamp="1587440636446" />
+    <state x="491" y="83" width="553" height="626" key="#com.intellij.ide.util.MemberChooser/0.27.1366.741@0.27.1366.741" timestamp="1588043070682" />
     <state x="436" y="264" width="494" height="272" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1587284574333">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
@@ -93,22 +94,26 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="476" y="156" width="424" height="484" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1587091923494" />
-    <state width="1153" height="346" key="GridCell.Tab.0.bottom" timestamp="1587472957359">
+    <state width="1320" height="2" key="GridCell.Tab.0.bottom" timestamp="1588053472874">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1153" height="346" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1587472957359" />
-    <state width="1153" height="346" key="GridCell.Tab.0.center" timestamp="1587472957357">
+    <state width="1320" height="2" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1588053472874" />
+    <state width="1320" height="2" key="GridCell.Tab.0.center" timestamp="1588053472871">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1153" height="346" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1587472957357" />
-    <state width="1153" height="346" key="GridCell.Tab.0.left" timestamp="1587472957355">
+    <state width="1320" height="2" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1588053472871" />
+    <state width="1320" height="2" key="GridCell.Tab.0.left" timestamp="1588053472870">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1153" height="346" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1587472957355" />
-    <state width="1153" height="346" key="GridCell.Tab.0.right" timestamp="1587472957358">
+    <state width="1320" height="2" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1588053472870" />
+    <state width="1320" height="2" key="GridCell.Tab.0.right" timestamp="1588053472872">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1153" height="346" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1587472957358" />
+    <state width="1320" height="2" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1588053472872" />
+    <state x="293" y="27" width="770" height="741" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1588043357630">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state x="293" y="27" width="770" height="741" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1366.741@0.27.1366.741" timestamp="1588043357630" />
     <state x="379" y="154" width="598" height="485" key="refactoring.ChangeSignatureDialog" timestamp="1587358073711">
       <screen x="0" y="27" width="1366" height="741" />
     </state>

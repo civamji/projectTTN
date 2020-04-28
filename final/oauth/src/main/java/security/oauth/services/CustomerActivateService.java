@@ -96,7 +96,7 @@ public class CustomerActivateService {
 
             customerActivateRepository.save(localCustomerActivate);
 
-            emailNotificationService.sendNotification("RE-ACCOUNT ACTIVATE TOKEN", "http://localhost:8080/register/confirm-account?token" + newToken, email);
+            emailNotificationService.sendNotification("RE-ACCOUNT ACTIVATE TOKEN", "http://localhost:8080/register/confirm-account?token=" + newToken, email);
 
             return "Success";
         }
